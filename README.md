@@ -81,7 +81,8 @@ mushroom_learning-run
 ###Dinahar_P_properties        
 https://www.kaggle.com/dhinaharp/mushroom-dataset
 
-###UCI_mushrooms.csv             : https://www.kaggle.com/uciml/mushroom-classification
+###UCI_mushrooms.csv             
+https://www.kaggle.com/uciml/mushroom-classification
 
 
 ##Picture datasets:
@@ -89,7 +90,11 @@ https://www.kaggle.com/dhinaharp/mushroom-dataset
 ###David_Harper_species_pictures
 https://www.kaggle.com/harperd17/mushroom-pictures
 
-This has 6 species, each with a varied amount of photoes.
+same data converted to jpeg:
+https://www.kaggle.com/jarxrr/mushroom-pictures
+
+
+This has 6 species, each with a varied amount of photoes. 59 MB in total.
 
 species                     # photos
 amanita       bisporigera    606
@@ -108,6 +113,104 @@ boletus edulus is a "cèpe" or "steinpilz" or "penny bun", and a prized edible.
 cantharellus is the chanterelle, a prized edible mushroom.
 omphalotus, also known as jack-o-lantern, is poisonous, glows in the dark, and often mistaken for the choice edible cantharellus leading to poisonings.
 russula mariae is an edible but unpleasant mushroom. Not of much interest.
+
+### Stepan Dupilak - predict poison mushrooom by photo
+https://www.kaggle.com/stepandupliak/predict-poison-mushroom-by-photo
+
+A large (2GB) collection of photos of mushrooms in two folders classified as either poisonous or edible.
+There are no other labels on the photos so we would have to take this guys word for it.
+
+6937 edible mushroom photos.
+4766 poisonous mushroom photos.
+
+###
+
+### MUST_AI - Mushroom Classification Dataset
+https://www.kaggle.com/mustai/mushroom-12-9528
+
+This is a gigantic data set of (2GB), with 9528 mushroom images, these are broken into
+train test and valid directories. These directories are then broken into specific family
+directories.
+
+We want species names, not family names. We can maybe further categorise within these folders
+to get to the species names. 
+
+The images are however clearly ordered by species type within these folders, so it would not be 
+difficult to reapply the species labels.
+
+The images were scraped from http://www.mushroom.world.
+
+This could be a good starting model to narrow a mushroom down to it's family type, and then use
+further models to narrow it down to species.
+
+family       # phots
+Agaricus     681
+Amanita      523
+Boletus      751
+Cortinarius  585
+Entoloma     587
+Exidia       304
+Hygrocybe    520
+Inocybe      432
+Lactarius    760
+Pluteus      308
+Russula      751
+Suillius     462
+
+In the code section of this dataset there are examples a model trained to identify
+the different families. Ther people who made this don't seem to know the difference
+between a species and a genus.
+
+### Saurabh Shahane - Mushroom Object Detection Dataset
+https://www.kaggle.com/saurabhshahane/mushroom-object-detection-dataset
+
+
+Tiny (8.42) data set with pictures of just chanterelles and chicken of the woods. The images are
+labelled as chicken of the woods or chanterelle. There are 247 in the training folder, 6 in the test
+folder, and 6 in the validation folder. It seems there were a small
+number of original images here which have been proliferated already. Or multiplied or whatever
+the word is.
+
+## From searching kaggle for "mushrooms"
+
+### Ilya Kondrusevich - Mushrooms
+https://www.kaggle.com/ilyakondrusevich/mushrooms
+
+
+Medium sized data set of 377.43 MB. Species are identified in each picture usefully, but the language is not english.
+Maybe russian or something. Either way the particular species could be identified from the pictures and used.
+
+There are 553 files for ...
+
+This can be analysed later to see the mushrooms per species etc.
+It has folders broken into "Detection" and "Classification", so this could be
+interesting.
+
+### CatDogo - Mushrooms classification - Common genus's images
+https://www.kaggle.com/maysee/mushrooms-classification-common-genuss-images
+
+This is suspiciously similar to the MUST_AI dataset. Here there is less description,
+but they are aware that it is genus that they identify, and also they specify here that
+these are nothern european mushrooms. It is likely that CatoDogo also scraped mushroom.world,
+but with some different criteria. You could check to see if there are the same images in 
+each of the datasets.
+
+There is 994.25, and you can notice that the number of photos of each genus are a bit different.
+Exidia, Incocybe, and Pluteus genuses not present. Perhaps this is not 
+in northerm europe.
+
+family       # ph
+Agaricus     353
+Amanita      750
+Boletus      1073
+Cortinarius  836
+Entoloma     364
+Hygrocybe    316
+Lactarius    1563
+Russula      1148
+Suillius     311
+
+
 
 
 
