@@ -107,11 +107,15 @@ russula       mariae         235
 -> useful for just these species. 
 
 amanita muscaria, also known as fly agaric, is the most famous and easily identifiable mushroom.
+
 amanita bisporigera, also known as the destroying angel, is tied with death cap (amanita phalloides) for most poisonous
 mushroom.
+
 boletus edulus is a "cèpe" or "steinpilz" or "penny bun", and a prized edible.
 cantharellus is the chanterelle, a prized edible mushroom.
+
 omphalotus, also known as jack-o-lantern, is poisonous, glows in the dark, and often mistaken for the choice edible cantharellus leading to poisonings.
+
 russula mariae is an edible but unpleasant mushroom. Not of much interest.
 
 ### Stepan Dupilak - predict poison mushrooom by photo
@@ -199,16 +203,16 @@ There is 994.25, and you can notice that the number of photos of each genus are 
 Exidia, Incocybe, and Pluteus genuses not present. Perhaps this is not 
 in northerm europe.
 
-family       # ph<b>
-Agaricus     353<b>
-Amanita      750<b>
-Boletus      1073<b>
-Cortinarius  836<b>
-Entoloma     364<b>
-Hygrocybe    316<b>
-Lactarius    1563<b>
-Russula      1148<b>
-Suillius     311<b>
+family       # ph<br/>
+Agaricus     353<br/>
+Amanita      750<br/>
+Boletus      1073<br/>
+Cortinarius  836<br/>
+Entoloma     364<br/>
+Hygrocybe    316<br/>
+Lactarius    1563<br/>
+Russula      1148<br/>
+Suillius     311<br/>
 
 
 ## Good options for datasets with species names:
