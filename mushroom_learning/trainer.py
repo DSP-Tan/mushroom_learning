@@ -1,5 +1,7 @@
-from mushroom_learning.data import load_training_data, load_validation_data
+#from mushroom_learning.data import load_training_data, load_validation_data
+from mushroom_learning.params import BUCKET_NAME, STORAGE_LOCATION
 from tensorflow.keras.models import Sequential
+from google.cloud import storage
 from tensorflow.keras import layers
 import tensorflow as tf
 from tensorflow import keras
@@ -52,25 +54,20 @@ def upload_model_to_gcp():
     client = storage.Client()
     bucket = client.bucket(BUCKET_NAME)
     blob = bucket.blob(STORAGE_LOCATION)
-    blob.upload_from_filename('model.joblib')
+    blob.upload_from_filename('../our_first_model')
+    print(f"uploaded model.joblib to gcp cloud storage under \n => {STORAGE_LOCATION}")
     
-def save_model(reg):
+def save_model(model):
     """method that saves the model into a .joblib file and uploads it on Google Storage /models folder
     HINTS : use joblib library and google-cloud-storage"""
 
     # saving the trained model to disk is mandatory to then beeing able to upload it to storage
     # Implement here
-    joblib.dump(reg, 'model.joblib')
-    print("saved model.joblib locally")
-
-    # Implement here
-    upload_model_to_gcp()
-    #storage_upload('model.joblib')
-    print(f"uploaded model.joblib to gcp cloud storage under \n => {STORAGE_LOCATION}")
-
+    model.save("../our_first_model")
                 
 if __name__ == "__main__":
-    train_ds = load_training_data()
-    val_ds = load_validation_data()
-    trainer = Trainer(train=train_ds, val=val_ds)
-   
+    #train_ds = load_training_data()
+    #val_ds = load_validation_data()
+    #trainer = Trainer(train=train_ds, val=val_ds)
+   # model = keras.models.load_model('path/to/location')
+    upload_model_to_gcp()
