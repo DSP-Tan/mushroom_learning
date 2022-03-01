@@ -76,18 +76,18 @@ mushroom_learning-run
 
 # Data set descriptions
 
-##csv data files:
+## csv data files:
 
-###Dinahar_P_properties        
+### Dinahar_P_properties        
 https://www.kaggle.com/dhinaharp/mushroom-dataset
 
-###UCI_mushrooms.csv             
+### UCI_mushrooms.csv             
 https://www.kaggle.com/uciml/mushroom-classification
 
 
-##Picture datasets:
+## Picture datasets:
 
-###David_Harper_species_pictures
+### David_Harper_species_pictures
 https://www.kaggle.com/harperd17/mushroom-pictures
 
 same data converted to jpeg:
@@ -96,22 +96,26 @@ https://www.kaggle.com/jarxrr/mushroom-pictures
 
 This has 6 species, each with a varied amount of photoes. 59 MB in total.
 
-species                     # photos
-amanita       bisporigera    606
-amanita       muscaria       367
-boletus       edulis         444
-cantharellus                 1183
-omphalotus    olearius       59
-russula       mariae         235
+species                     # photos<br/>
+amanita bisporigera    606 <br/> 
+amanita muscaria       367 <br/> 
+boletus edulis         444 <br/> 
+cantharellus           1183<br/> 
+omphalotus olearius    59  <br/> 
+russula mariae         235 <br/> 
 
 -> useful for just these species. 
 
 amanita muscaria, also known as fly agaric, is the most famous and easily identifiable mushroom.
+
 amanita bisporigera, also known as the destroying angel, is tied with death cap (amanita phalloides) for most poisonous
 mushroom.
+
 boletus edulus is a "cèpe" or "steinpilz" or "penny bun", and a prized edible.
 cantharellus is the chanterelle, a prized edible mushroom.
+
 omphalotus, also known as jack-o-lantern, is poisonous, glows in the dark, and often mistaken for the choice edible cantharellus leading to poisonings.
+
 russula mariae is an edible but unpleasant mushroom. Not of much interest.
 
 ### Stepan Dupilak - predict poison mushrooom by photo
@@ -143,19 +147,20 @@ The images were scraped from http://www.mushroom.world.
 This could be a good starting model to narrow a mushroom down to it's family type, and then use
 further models to narrow it down to species.
 
-family       # phots
-Agaricus     681
-Amanita      523
-Boletus      751
-Cortinarius  585
-Entoloma     587
-Exidia       304
-Hygrocybe    520
-Inocybe      432
-Lactarius    760
-Pluteus      308
-Russula      751
-Suillius     462
+family       # phots<br/>
+Agaricus     681<br/>
+Amanita      523<br/>
+Boletus      751<br/>
+Cortinarius  585<br/>
+Entoloma     587<br/>
+Exidia       304<br/>
+Hygrocybe    520<br/>
+Inocybe      432<br/>
+Lactarius    760<br/>
+Pluteus      308<br/>
+Russula      751<br/>
+Suillius     462<br/>
+
 
 In the code section of this dataset there are examples a model trained to identify
 the different families. Ther people who made this don't seem to know the difference
@@ -199,16 +204,17 @@ There is 994.25, and you can notice that the number of photos of each genus are 
 Exidia, Incocybe, and Pluteus genuses not present. Perhaps this is not 
 in northerm europe.
 
-family       # ph
-Agaricus     353
-Amanita      750
-Boletus      1073
-Cortinarius  836
-Entoloma     364
-Hygrocybe    316
-Lactarius    1563
-Russula      1148
-Suillius     311
+
+family       # ph<br/>
+Agaricus     353<br/>
+Amanita      750<br/>
+Boletus      1073<br/>
+Cortinarius  836<br/>
+Entoloma     364<br/>
+Hygrocybe    316<br/>
+Lactarius    1563<br/>
+Russula      1148<br/>
+Suillius     311<br/>
 
 
 ## Good options for datasets with species names:

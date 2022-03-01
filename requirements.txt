@@ -30,6 +30,12 @@ joblib
 memoized-property
 termcolor
 
+
+# front-end
+streamlit
+watchdog
+requests
+
 # plotting
 matplotlib
 seaborn
