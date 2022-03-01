@@ -28,8 +28,15 @@ joblib
 memoized-property
 termcolor
 
+
 # front-end
 streamlit
 watchdog
-matplotlib
 requests
+
+# plotting
+matplotlib
+seaborn
+
+
+
