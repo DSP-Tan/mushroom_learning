@@ -143,19 +143,19 @@ The images were scraped from http://www.mushroom.world.
 This could be a good starting model to narrow a mushroom down to it's family type, and then use
 further models to narrow it down to species.
 
-family       # phots
-Agaricus     681
-Amanita      523
-Boletus      751
-Cortinarius  585
-Entoloma     587
-Exidia       304
-Hygrocybe    520
-Inocybe      432
-Lactarius    760
-Pluteus      308
-Russula      751
-Suillius     462
+family       # phots<b>
+Agaricus     681<b>
+Amanita      523<b>
+Boletus      751<b>
+Cortinarius  585<b>
+Entoloma     587<b>
+Exidia       304<b>
+Hygrocybe    520<b>
+Inocybe      432<b>
+Lactarius    760<b>
+Pluteus      308<b>
+Russula      751<b>
+Suillius     462<b>
 
 In the code section of this dataset there are examples a model trained to identify
 the different families. Ther people who made this don't seem to know the difference
@@ -199,16 +199,16 @@ There is 994.25, and you can notice that the number of photos of each genus are 
 Exidia, Incocybe, and Pluteus genuses not present. Perhaps this is not 
 in northerm europe.
 
-family       # ph
-Agaricus     353
-Amanita      750
-Boletus      1073
-Cortinarius  836
-Entoloma     364
-Hygrocybe    316
-Lactarius    1563
-Russula      1148
-Suillius     311
+family       # ph<b>
+Agaricus     353<b>
+Amanita      750<b>
+Boletus      1073<b>
+Cortinarius  836<b>
+Entoloma     364<b>
+Hygrocybe    316<b>
+Lactarius    1563<b>
+Russula      1148<b>
+Suillius     311<b>
 
 
 ## Good options for datasets with species names:
