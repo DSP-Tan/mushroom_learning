@@ -96,13 +96,13 @@ https://www.kaggle.com/jarxrr/mushroom-pictures
 
 This has 6 species, each with a varied amount of photoes. 59 MB in total.
 
-species                     # photos
-amanita       bisporigera    606
-amanita       muscaria       367
-boletus       edulis         444
-cantharellus                 1183
-omphalotus    olearius       59
-russula       mariae         235
+species                     # photos<br/>
+amanita bisporigera    606 <br/> 
+amanita muscaria       367 <br/> 
+boletus edulis         444 <br/> 
+cantharellus           1183<br/> 
+omphalotus olearius    59  <br/> 
+russula mariae         235 <br/> 
 
 -> useful for just these species. 
 
