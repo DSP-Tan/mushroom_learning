@@ -76,18 +76,18 @@ mushroom_learning-run
 
 # Data set descriptions
 
-##csv data files:
+## csv data files:
 
-###Dinahar_P_properties        
+### Dinahar_P_properties        
 https://www.kaggle.com/dhinaharp/mushroom-dataset
 
-###UCI_mushrooms.csv             
+### UCI_mushrooms.csv             
 https://www.kaggle.com/uciml/mushroom-classification
 
 
-##Picture datasets:
+## Picture datasets:
 
-###David_Harper_species_pictures
+### David_Harper_species_pictures
 https://www.kaggle.com/harperd17/mushroom-pictures
 
 same data converted to jpeg:
@@ -143,19 +143,19 @@ The images were scraped from http://www.mushroom.world.
 This could be a good starting model to narrow a mushroom down to it's family type, and then use
 further models to narrow it down to species.
 
-family       # phots\n
-Agaricus     681<b>
-Amanita      523<b>
-Boletus      751<b>
-Cortinarius  585<b>
-Entoloma     587<b>
-Exidia       304<b>
-Hygrocybe    520<b>
-Inocybe      432<b>
-Lactarius    760<b>
-Pluteus      308<b>
-Russula      751<b>
-Suillius     462<b>
+family       # phots<br/>
+Agaricus     681<br/>
+Amanita      523<br/>
+Boletus      751<br/>
+Cortinarius  585<br/>
+Entoloma     587<br/>
+Exidia       304<br/>
+Hygrocybe    520<br/>
+Inocybe      432<br/>
+Lactarius    760<br/>
+Pluteus      308<br/>
+Russula      751<br/>
+Suillius     462<br/>
 
 In the code section of this dataset there are examples a model trained to identify
 the different families. Ther people who made this don't seem to know the difference
