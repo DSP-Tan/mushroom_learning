@@ -211,7 +211,28 @@ Russula      1148
 Suillius     311
 
 
+## Good options for datasets with species names:
 
+### Use kaggle api to get data which was for this challenge
+https://www.kaggle.com/c/fungi-challenge-fgvc-2018/data
 
+It's here:
+https://github.com/visipedia/fgvcx_fungi_comp#data
 
+It is 13 GB of training and validation. But I think all labelled with species.
+So this is the data we need. Maybe some species are underrepresented, and it's ok
+if we can't identify them all.
 
+See description here:
+https://towardsdatascience.com/computer-vision-lets-classify-mushrooms-6b3abe1561eb
+
+### Use the webscraping described by the finnish people.
+
+See their GitHub for that.
+
+### give up commercial rights and use image net.
+
+http://fungai.org/2017/12/12/download-imagenet-images-by-wnid/
+http://fungai.org/2017/12/13/train-a-basic-wild-mushroom-classifier/
+
+No!
