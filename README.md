@@ -161,6 +161,7 @@ Pluteus      308<br/>
 Russula      751<br/>
 Suillius     462<br/>
 
+
 In the code section of this dataset there are examples a model trained to identify
 the different families. Ther people who made this don't seem to know the difference
 between a species and a genus.
@@ -202,6 +203,7 @@ each of the datasets.
 There is 994.25, and you can notice that the number of photos of each genus are a bit different.
 Exidia, Incocybe, and Pluteus genuses not present. Perhaps this is not 
 in northerm europe.
+
 
 family       # ph<br/>
 Agaricus     353<br/>
