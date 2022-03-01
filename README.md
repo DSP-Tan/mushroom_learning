@@ -143,7 +143,7 @@ The images were scraped from http://www.mushroom.world.
 This could be a good starting model to narrow a mushroom down to it's family type, and then use
 further models to narrow it down to species.
 
-family       # phots<b>
+family       # phots\n
 Agaricus     681<b>
 Amanita      523<b>
 Boletus      751<b>
