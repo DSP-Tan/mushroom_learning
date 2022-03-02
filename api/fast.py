@@ -2,6 +2,11 @@ from fastapi import FastAPI,File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 # from git import Blob
 import joblib
+from mushroom_learning.gcp import load_from_gcp
+from tensorflow.keras import utils
+import tensorflow as tf
+from tensorflow import keras
+
 
 from numpy import bitwise_not
 import pandas as pd
@@ -39,9 +44,15 @@ def create_file(file: bytes = File(...)):
 
     model = load_from_gcp()
 
-
     # # make prediction
-    results = model.predict(decode_img)
-    pred = str(results[0])
-
-    return pred
+    img_height = 224
+    img_width = 224
+    decode_img_reshaped = tf.keras.utils.load_img(decode_img, target_size=(img_height, img_width)
+    )
+    class_names = ['edable', 'poison']
+    img_array = tf.keras.utils.img_to_array(decode_img_reshaped)
+    img_array = tf.expand_dims(img_array, 0) # Create a batch
+    results = model.predict(img_array)
+    classif = int(results > .5)
+    output = f"This image most likely belongs to {class_names[classif]} with a score of: {prediction[0][0]:.2f}"
+    return output
