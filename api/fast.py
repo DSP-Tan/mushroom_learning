@@ -27,14 +27,15 @@ def index():
 @app.get("/predict")
 def create_file(file: bytes = File(...)):
     #The file is in bytes format. Convert byte to bits.
+    # print(file[0:100])
     from_byte_to_bits = bytearray(file)
     #Convert bits to array. You can use
     from_bits_to_array = np.asarray(from_byte_to_bits, dtype="uint8")
     #Decode the array to image. This will be used from the model.
     decode_img = cv2.imdecode(from_bits_to_array,cv2.IMREAD_COLOR)
-    print(type(decode_img))
+    # print(type(decode_img))
     #Save the image. Just to check it
-    cv2.imwrite('output.png',decode_img)
+    # cv2.imwrite('output.png',decode_img)
 
     # pipeline = get_model_from_gcp()
     # pipeline = joblib.load('model.joblib')
