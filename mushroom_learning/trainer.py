@@ -73,6 +73,7 @@ class Trainer(object):
         self.history = history 
     
     def evaluate_model(self):
+        # precision 
         acc = self.history.history['accuracy']
         val_acc = self.history.history['val_accuracy'] 
         loss = self.history.history['loss']
@@ -84,11 +85,33 @@ class Trainer(object):
         self.model.save("../our_first_model")
         
 if __name__ == "__main__":
-   train_ds = load_training_data()
-   print(type(train_ds))
+    #train_ds = load_training_data()
+   # print(type(train_ds))
 #    val_ds = load_validation_data()
 #    print(type(val_ds))
 #    trainer = Trainer(train=train_ds, val=val_ds)
 
 #    save_to_gcp()
-#    model = load_from_gcp()
+    model = load_from_gcp()
+   
+    img_height = 224
+    img_width = 224
+    class_names = ['edable', 'poison']
+
+    img = tf.keras.utils.load_img(
+        "/Users/laurameyer/Desktop/poisonous-white-mushrooms.jpg", target_size=(img_height, img_width)
+    )
+
+    img_array = tf.keras.utils.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0) # Create a batch
+
+    prediction = model.predict(img_array)
+    print(prediction)
+    classif = int(prediction > .5)
+    print(classif)
+
+
+    print(f"This image most likely belongs to {class_names[classif]} with a score of: {prediction[0][0]:.2f}")
+   
+   
+   
