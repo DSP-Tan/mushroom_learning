@@ -32,7 +32,6 @@ memoized-property
 termcolor
 pathlib
 
-
 # front-end
 streamlit
 watchdog
@@ -41,3 +40,4 @@ requests
 # plotting
 matplotlib
 seaborn
+python-dotenv
