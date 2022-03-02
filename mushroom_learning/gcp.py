@@ -12,7 +12,7 @@ env_path = find_dotenv() # automatic find
 # load your api key as environment variables
 load_dotenv(env_path)
 
-# Please change when changing the model 
+# PLEASE CHANGE WHEN CHANGING MODEL 
 LOCAL_STORAGE_PATH =  "../our_first_model"
 
 def save_to_gcp():
@@ -24,7 +24,6 @@ def save_to_gcp():
     storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
     bucket = storage_client.bucket(BUCKET_NAME)
     blob = bucket.blob(STORAGE_LOCATION)
-
     blob.upload_from_string(LOCAL_STORAGE_PATH)
 
     print(
