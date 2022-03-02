@@ -67,10 +67,10 @@ pylint:
 LOCAL_PATH=raw_data/Mushrooms/
 
 # project id
-PROJECT_ID=mushroomlearning
+PROJECT_ID=omega-clarity-337815
 
 # bucket name
-BUCKET_NAME=wagon-data-mushroom-learning-images
+BUCKET_NAME=mushroom-bucket-le-wagon
 
 # bucket directory in which to store the uploaded file (we choose to name this data as a convention)
 BUCKET_FOLDER=data
@@ -101,4 +101,3 @@ run_api:
 
 streamlit:
 	-@streamlit run app.py
-
