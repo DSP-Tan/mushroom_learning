@@ -37,11 +37,11 @@ def create_file(file: bytes = File(...)):
     #Save the image. Just to check it
     # cv2.imwrite('output.png',decode_img)
 
-    # pipeline = get_model_from_gcp()
-    # pipeline = joblib.load('model.joblib')
+    model = load_from_gcp()
+
 
     # # make prediction
-    # results = pipeline.predict(X)
-    # pred = str(results[0])
+    results = model.predict(decode_img)
+    pred = str(results[0])
 
-    return decode_img.shape
+    return pred
