@@ -112,7 +112,8 @@ amanita bisporigera, also known as the destroying angel, is tied with death cap 
 mushroom.
 
 boletus edulus is a "cèpe" or "steinpilz" or "penny bun", and a prized edible.
-cantharellus is the chanterelle, a prized edible mushroom.
+cantharellus is the chanterelle, a prized edible mushroom. Cantharellus is a genus name; what David Harper has here is
+the species cantharellus cibarius.
 
 omphalotus, also known as jack-o-lantern, is poisonous, glows in the dark, and often mistaken for the choice edible cantharellus leading to poisonings.
 
