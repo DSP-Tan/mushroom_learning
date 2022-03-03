@@ -1,0 +1,1 @@
+https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=amanita%20muscaria
