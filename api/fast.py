@@ -52,5 +52,5 @@ def create_file(file: bytes = File(...)):
     results = model.predict(img_array)
     class_names = ['edible', 'poisonous']
     classif = int(results > .5)
-    output = f"This mushroom is most likely {class_names[classif]}. Score: {classif:.2f}"
+    output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
     return output
