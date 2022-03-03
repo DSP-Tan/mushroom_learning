@@ -47,3 +47,4 @@ def load_from_gcp():
     
     model = get_model()
     return model 
+
