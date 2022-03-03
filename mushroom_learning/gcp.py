@@ -7,20 +7,21 @@ from tensorflow import keras
 
 # point to .env file
 env_path = join(dirname(abspath(__file__)),'.env') # ../.env
-env_path = find_dotenv() # automatic find 
+env_path = find_dotenv() # automatic find
 
 # load your api key as environment variables
 load_dotenv(env_path)
 
-# PLEASE CHANGE WHEN CHANGING MODEL 
+# PLEASE CHANGE WHEN CHANGING MODEL
+#LOCAL_STORAGE_PATH =  "/home/stella/code/DSP-Tan/mushroom_learning/our_first_model"
 LOCAL_STORAGE_PATH =  "../our_first_model"
 
 def save_to_gcp():
     """Uploads a file to the bucket."""
-    
+
     # make sure you saved your model locally before calling this function! (check save_model in Trainer class)
-    # Where is the model stored locally? 
-    
+    # Where is the model stored locally?
+
     storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
     bucket = storage_client.bucket(BUCKET_NAME)
     blob = bucket.blob(STORAGE_LOCATION)
@@ -31,19 +32,24 @@ def save_to_gcp():
             BUCKET_NAME, LOCAL_STORAGE_PATH, STORAGE_LOCATION
         )
     )
-    
+
 def load_from_gcp():
     """Downloads a blob from the bucket."""
-    
-    def get_model(): 
-        return keras.models.load_model(LOCAL_STORAGE_PATH) 
-
     storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
+    def get_model():
+        print(LOCAL_STORAGE_PATH)
+        return keras.models.load_model(LOCAL_STORAGE_PATH)
+
+    print(os.environ['gcp_json_path'])
+    # print(os.getenv("gcp_json_path"))
+    # print("buckets: ")
+    # print(list(storage_client.list_buckets()))
+    # # print(BUCKET_NAME)
     bucket = storage_client.get_bucket(BUCKET_NAME)
     blobs = bucket.list_blobs(prefix=STORAGE_LOCATION)  # Get list of files
     for blob in blobs:
-        filename = blob.name.replace('/', '_') 
+        filename = blob.name.replace('/', '_')
         blob.download_to_filename(LOCAL_STORAGE_PATH + filename)  # Download
-    
+
     model = get_model()
-    return model 
+    return model
