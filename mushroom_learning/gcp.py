@@ -1,17 +1,49 @@
 import os
-
 from google.cloud import storage
-from termcolor import colored
-from mushroom_learning.params import BUCKET_NAME, MODEL_NAME, MODEL_VERSION
+from mushroom_learning.params import BUCKET_NAME, STORAGE_LOCATION
+from dotenv import load_dotenv, find_dotenv
+from os.path import join, dirname, abspath
+from tensorflow import keras
 
-def storage_upload(rm=False):
-    client = storage.Client().bucket(BUCKET_NAME)
+# point to .env file
+env_path = join(dirname(abspath(__file__)),'.env') # ../.env
+env_path = find_dotenv() # automatic find 
 
-    local_model_name = 'model.joblib'
-    storage_location = f"models/{MODEL_NAME}/{MODEL_VERSION}/{local_model_name}"
-    blob = client.blob(storage_location)
-    blob.upload_from_filename('model.joblib')
-    print(colored(f"=> model.joblib uploaded to bucket {BUCKET_NAME} inside {storage_location}",
-                  "green"))
-    if rm:
-        os.remove('model.joblib')
+# load your api key as environment variables
+load_dotenv(env_path)
+
+# PLEASE CHANGE WHEN CHANGING MODEL 
+LOCAL_STORAGE_PATH =  "../our_first_model"
+
+def save_to_gcp():
+    """Uploads a file to the bucket."""
+    
+    # make sure you saved your model locally before calling this function! (check save_model in Trainer class)
+    # Where is the model stored locally? 
+    
+    storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
+    bucket = storage_client.bucket(BUCKET_NAME)
+    blob = bucket.blob(STORAGE_LOCATION)
+    blob.upload_from_string(LOCAL_STORAGE_PATH)
+
+    print(
+        "{} with contents {} uploaded to {}.".format(
+            BUCKET_NAME, LOCAL_STORAGE_PATH, STORAGE_LOCATION
+        )
+    )
+    
+def load_from_gcp():
+    """Downloads a blob from the bucket."""
+    
+    def get_model(): 
+        return keras.models.load_model(LOCAL_STORAGE_PATH) 
+
+    storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
+    bucket = storage_client.get_bucket(BUCKET_NAME)
+    blobs = bucket.list_blobs(prefix=STORAGE_LOCATION)  # Get list of files
+    for blob in blobs:
+        filename = blob.name.replace('/', '_') 
+        blob.download_to_filename(LOCAL_STORAGE_PATH + filename)  # Download
+    
+    model = get_model()
+    return model 
