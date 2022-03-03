@@ -12,6 +12,11 @@ action    = parse   This specifies that you get the HTML
 action    = query   This specifies we want to fetch data from and about MediaWiki.
 format    = json    Gives a JSON like we like.
 
+See this for ways to make more intelligent calls. Note we are only extracting the lead 
+section here and this is obviously giving limited information.
+https://www.mediawiki.org/wiki/API:Revisions
+
+
 But this ends up being rather unstructured (see notebook). So we will read more about it in these
 articles:
 
