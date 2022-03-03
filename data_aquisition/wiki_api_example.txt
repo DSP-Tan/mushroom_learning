@@ -1,5 +1,9 @@
 Here is an example api request:
 https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=amanita%20muscaria
+In JSON format it's better:
+https://en.wikipedia.org/w/api.php?format=json&action=query&prop=revisions&rvprop=content&rvsection=0&titles=amanita%20muscaria
+
+You can view that JSON format with a JSON viewer.
 
 This works when you just paste it into a browser but not when you curl it.
 
