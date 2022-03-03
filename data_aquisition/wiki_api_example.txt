@@ -22,3 +22,12 @@ articles:
 
 https://stackoverflow.com/questions/7185288/how-can-i-get-wikipedia-content-using-wikipedias-api
 https://monashdatafluency.github.io/python-web-scraping/section-3-API-based-scraping/
+
+For tomorrow, perhaps we could just post information from these pages:
+https://en.wikipedia.org/wiki/List_of_poisonous_fungus_species
+https://en.wikipedia.org/wiki/Category:Edible_fungi
+
+Depending on whether the mushroom is poisonous or edible.
+
+
+
