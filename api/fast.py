@@ -1,4 +1,4 @@
-from black import out
+
 from fastapi import FastAPI,File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from mushroom_learning.gcp import load_from_gcp
