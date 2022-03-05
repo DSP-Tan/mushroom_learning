@@ -4,3 +4,30 @@ gsutil cp gs://mushroom-bucket-le-wagon/models/first_model  .
 #This tells you what keys are associated with the account
 gcloud iam service-accounts keys list \                                                       [🐍 mushroom_learning]
     --iam-account=LeWagon@omega-clarity-337815.iam.gserviceaccount.com
+
+#This error might come up after you set your new  key
+gcsfs.retry.HttpError: Anonymous caller does not have storage.objects.get access to the Google Cloud Storage object., 401
+
+#To remedy this you must do 
+gcloud auth login
+# and then enter your details.
+
+#Also ensure that echo $GOOGLE_APPLICATION_CREDENTIALS points to the
+#key that is actually linked on gcp. So check the cloud project for keys,
+#the associated users, and then the numbers.
+#
+# Currently I don't know where this env variable is set, so I just gotta set
+# it myself each time.
+#
+# This has not worked
+
+# Here is a useful command which tells you about the environment variables
+# and all that.
+gcloud auth application-default login
+
+# I think what fixed it was resetting the $GOOGLE_APPLICATION_CREDENTIALS
+# in the aliases.
+# Because even if you set it in the terminal, when you run a python this opens
+# a new environment. Then I restarted my computer and it worked.
+So make sure that in ~/.aliases you have the correct key set.
+
