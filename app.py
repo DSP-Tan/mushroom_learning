@@ -32,6 +32,7 @@ spinner_quotes = ['“All Fungi are edible. Some fungi are only edible once.” 
                   'Why did the mushroom go to the party? Because he\'s a fungi! — Louis Tomlinson',
                   'Look around when you have got your first mushroom or made your first discovery: they grow in clusters. — George Polya',
                   'From dead plant matter to nematodes to bacteria, never underestimate the cleverness of mushrooms to find new food! — Paul Stamets',
+                  'Compliments are like mushrooms, the most beautiful are the most poisonous. - italian proverb'
                   ]
 
 random_num = random.randint(0,len(spinner_quotes)-1)
