@@ -1,0 +1,6 @@
+#Using this you can copy anything.
+gsutil cp gs://mushroom-bucket-le-wagon/models/first_model  .
+
+#This tells you what keys are associated with the account
+gcloud iam service-accounts keys list \                                                       [🐍 mushroom_learning]
+    --iam-account=LeWagon@omega-clarity-337815.iam.gserviceaccount.com
