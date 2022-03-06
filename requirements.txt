@@ -18,7 +18,6 @@ yapf
 
 # API
 google-cloud-storage
-s3fs
 uvicorn
 fastapi
 python-multipart
