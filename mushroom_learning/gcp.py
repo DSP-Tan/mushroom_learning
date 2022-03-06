@@ -33,12 +33,17 @@ def save_to_gcp():
         )
     )
 
+
+def get_model():
+    '''
+    This retrieves a model from our local storage.
+    '''
+    print(LOCAL_STORAGE_PATH)
+    return keras.models.load_model(LOCAL_STORAGE_PATH)
+
 def load_from_gcp():
     """Downloads a blob from the bucket."""
     storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
-    def get_model():
-        print(LOCAL_STORAGE_PATH)
-        return keras.models.load_model(LOCAL_STORAGE_PATH)
 
     print(os.environ['gcp_json_path'])
     # print(os.getenv("gcp_json_path"))
