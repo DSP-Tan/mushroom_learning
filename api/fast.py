@@ -1,7 +1,7 @@
 
 from fastapi import FastAPI,File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from mushroom_learning.gcp import load_from_gcp
+from mushroom_learning.gcp import get_model
 from tensorflow.keras import utils
 import tensorflow as tf
 from tensorflow import keras
@@ -24,6 +24,16 @@ app.add_middleware(
 def index():
     return {"Don't eat that mushroom!"}
 
+# Check file size in Kbytes
+@app.get("/size")
+async def create_file(file: bytes = File(...)):
+    # convert to bytes with bytearray, and to np array
+    image = np.asarray(bytearray(file), dtype="uint8")
+
+    # divide by 1000 for Kbytes
+    return f'This file is {len(image)/1000} Kbytes'
+
+
 #Api request
 @app.get("/predict")
 def create_file(file: bytes = File(...)):
@@ -36,7 +46,7 @@ def create_file(file: bytes = File(...)):
     # # # #Save the image. Just to check it
     # cv.imwrite('output.png',decode_img)
 
-    model = load_from_gcp()
+    model = get_model()
 
     # # # # # make prediction
     img_height = 224

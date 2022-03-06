@@ -1,12 +1,15 @@
-
-from fastapi import FastAPI,File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
-from mushroom_learning.gcp import get_model
-from tensorflow.keras import utils
 import tensorflow as tf
-from tensorflow import keras
-import cv2 as cv
-import numpy as np
+import cv2        as cv
+import numpy      as np
+
+from fastapi                  import FastAPI,File, UploadFile
+from fastapi.middleware.cors  import CORSMiddleware
+from mushroom_learning.gcp    import get_model
+
+from tensorflow               import keras
+from tensorflow.keras         import utils
+
+
 
 
 app = FastAPI()
@@ -24,11 +27,24 @@ app.add_middleware(
 def index():
     return {"Don't eat that mushroom!"}
 
+
+# Check file size in Kbytes
+@app.get("/size")
+async def create_file(file: bytes = File(...)):
+    # convert to bytes with bytearray, and to np array
+    image = np.asarray(bytearray(file), dtype="uint8")
+
+    #return {"file_size": len(file)/1000}
+    return f'This file is {len(image)/1000} Kbytes'
+
+
+
 #Api request
 @app.get("/predict")
 def create_file(file: bytes = File(...)):
     im_API=bits_to_model(file)
 
+    model = get_model()
     results = model.predict(im_API)
     class_names = ['edible', 'poisonous']
     classif = int(results > .5)
