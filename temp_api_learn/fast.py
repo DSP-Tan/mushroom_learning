@@ -1,12 +1,15 @@
-
-from fastapi import FastAPI,File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
-from mushroom_learning.gcp import get_model
-from tensorflow.keras import utils
 import tensorflow as tf
-from tensorflow import keras
-import cv2 as cv
-import numpy as np
+import cv2        as cv
+import numpy      as np
+
+from fastapi                  import FastAPI,File, UploadFile
+from fastapi.middleware.cors  import CORSMiddleware
+from mushroom_learning.gcp    import get_model
+
+from tensorflow               import keras
+from tensorflow.keras         import utils
+
+
 
 
 app = FastAPI()
@@ -26,7 +29,7 @@ def index():
 
 
 # Check file size in Kbytes
-@app.post("/size")
+@app.get("/size")
 async def create_file(file: bytes = File(...)):
     # convert to bytes with bytearray, and to np array
     image = np.asarray(bytearray(file), dtype="uint8")
