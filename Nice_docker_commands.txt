@@ -1,3 +1,8 @@
+# The sudo here is just how I have to do this on my linux set up,
+# it just makes sure you have permission to use it and will ask
+# for a password each time you run a command preceeded by it.
+
+
 # Stop all containers, delete all images, and prune the system.
 docker stop CONTAINER_ID
 sudo docker rmi --force $(sudo docker images -q)
@@ -17,3 +22,12 @@ sudo docker run -it -e PORT=8000 -p 8000:8000 api:latest sh
 
 # Finally run in a way where you can call the docker hosted api from your local browser
 sudo docker run  -e PORT=8000 -p 8000:8000 api:latest
+
+# See what containers are running
+sudo docker ps
+
+# Stop or kill commands
+docker stop 152e5b79177b  # ⚠️ use the correct CONTAINER ID
+docker kill 152e5b79177b  # ☢️ only if the image refuses to stop (did someone create an ∞ loop?)
+
+

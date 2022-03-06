@@ -7,6 +7,7 @@ wheel>=0.29
 # data science
 numpy
 pandas
+scikit-learn
 tensorflow
 
 # tests/linter
@@ -17,7 +18,9 @@ pytest
 yapf
 
 # API
+gcsfs
 google-cloud-storage
+mlflow
 s3fs
 uvicorn
 fastapi
@@ -26,6 +29,8 @@ opencv-python
 
 # utilities
 six>=1.14
+joblib
+memoized-property
 termcolor
 pathlib
 
@@ -35,4 +40,6 @@ watchdog
 requests
 
 # plotting
+matplotlib
+seaborn
 python-dotenv
