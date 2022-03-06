@@ -1,0 +1,10 @@
+# Stop all containers, delete all images, and prune the system.
+docker stop CONTAINER_ID
+sudo docker rmi --force $(sudo docker images -q)
+sudo docker system prune
+
+sudo docker images
+sudo docker run -it python:3.8.12-buster sh
+sudo docker build -t api .
+sudo docker run -it -e PORT=8000 -p 8000:8000 api:latest sh
+sudo docker run  -e PORT=8000 -p 8000:8000 api:latest
