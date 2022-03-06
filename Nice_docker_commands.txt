@@ -36,3 +36,29 @@ the raw_data file, and some other things I didn't want and my computer was runni
 before it could finish.
 
 To remedy this I just moved the raw data and the api files one directory up and then did the command.
+
+#########################################
+########## Setting up GCR ###############
+#########################################
+# First go throught he configuration steps described
+# in the challenges.
+
+# Set environment variables
+
+# project ID
+export PROJECT_ID=replace-with-your-gcloud-project-id
+gcloud config set project $PROJECT_ID
+
+# name of docker image
+export DOCKER_IMAGE_NAME=mushroom-docker
+echo $DOCKER_IMAGE_NAME
+
+# Now you can build it:
+sudo docker build -t eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME .
+
+# Check locally one last time before deployment
+docker run -e PORT=8000 -p 8000:8000 eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+
+# Push to google container registry
+sudo docker push eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+
