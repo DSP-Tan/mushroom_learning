@@ -14,7 +14,6 @@ env_path = find_dotenv() # automatic find
 load_dotenv(env_path)
 
 # PLEASE CHANGE WHEN CHANGING MODEL
-#LOCAL_STORAGE_PATH =  "/home/stella/code/DSP-Tan/mushroom_learning/our_first_model"
 LOCAL_STORAGE_PATH =  "../our_first_model"
 
 def save_to_gcp():
