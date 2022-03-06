@@ -30,7 +30,7 @@ async def create_file(file: bytes = File(...)):
     # convert to bytes with bytearray, and to np array
     image = np.asarray(bytearray(file), dtype="uint8")
 
-    #return {"file_size": len(file)/1000}
+    # divide by 1000 for Kbytes
     return f'This file is {len(image)/1000} Kbytes'
 
 
