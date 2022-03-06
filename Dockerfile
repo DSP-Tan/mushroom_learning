@@ -6,7 +6,13 @@ COPY our_first_model /our_first_model
 COPY requirements.txt /requirements.txt
 
 RUN pip install -r requirements.txt
+
+# These commands are necessary for open-cv, which
+# relies on normal linux libraries which would be
+# on a normal computer but are not on the docker
+# system.
 RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y
+
 
 CMD uvicorn api.fast:app --host 0.0.0.0 --port $PORT
