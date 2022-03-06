@@ -29,6 +29,7 @@ def index():
 def create_file(file: bytes = File(...)):
     im_API=bits_to_model(file)
 
+    model = get_model()
     results = model.predict(im_API)
     class_names = ['edible', 'poisonous']
     classif = int(results > .5)
