@@ -1,9 +1,10 @@
 import os
-from google.cloud import storage
+from tensorflow               import keras
+from google.cloud             import storage
 from mushroom_learning.params import BUCKET_NAME, STORAGE_LOCATION
-from dotenv import load_dotenv, find_dotenv
-from os.path import join, dirname, abspath
-from tensorflow import keras
+from dotenv                   import load_dotenv, find_dotenv
+from os.path                  import join, dirname, abspath
+
 
 # point to .env file
 env_path = join(dirname(abspath(__file__)),'.env') # ../.env
