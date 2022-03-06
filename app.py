@@ -24,7 +24,7 @@ image = st.file_uploader(label, type=None, accept_multiple_files=False, key=None
 cols = st.columns(3)
 URL = 'http://127.0.0.1:8000/predict/'
 
-spinner_quotes = ['“All Fungi are edible. Some fungi are only edible once.” ― Terry Pratchett',
+spinner_quotes = ['“All Fungi are edible. Some fungi are only edible once.” ― Polish/Croatian proverb',
                   '“Nature alone is antique, and the oldest art a mushroom.” ~ Thomas Carlyle',
                   'A meal without mushrooms is like a day without rain. - John Cage',
                   'Advice is like mushrooms. The wrong kind can prove fatal. - Charles E. McKenzie',
@@ -32,8 +32,11 @@ spinner_quotes = ['“All Fungi are edible. Some fungi are only edible once.” 
                   'Why did the mushroom go to the party? Because he\'s a fungi! — Louis Tomlinson',
                   'Look around when you have got your first mushroom or made your first discovery: they grow in clusters. — George Polya',
                   'From dead plant matter to nematodes to bacteria, never underestimate the cleverness of mushrooms to find new food! — Paul Stamets',
-                  'Compliments are like mushrooms, the most beautiful are the most poisonous. - italian proverb'
+                  'Compliments are like mushrooms, the most beautiful are the most poisonous. - Italian proverb',
+                  "One who is noisy in the wood, scares away mushrooms. - Russian proverb"
                   ]
+# Lot's of nice proverbs here: https://quoteproverbs.com/mushrooms/
+# On googling the first quote is not actually by Terry prachett but is a proverb.
 
 random_num = random.randint(0,len(spinner_quotes)-1)
 
