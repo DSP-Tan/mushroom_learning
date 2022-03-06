@@ -1,9 +1,10 @@
 import os
-from google.cloud import storage
+from tensorflow               import keras
+from google.cloud             import storage
 from mushroom_learning.params import BUCKET_NAME, STORAGE_LOCATION
-from dotenv import load_dotenv, find_dotenv
-from os.path import join, dirname, abspath
-from tensorflow import keras
+from dotenv                   import load_dotenv, find_dotenv
+from os.path                  import join, dirname, abspath
+
 
 # point to .env file
 env_path = join(dirname(abspath(__file__)),'.env') # ../.env
@@ -13,7 +14,6 @@ env_path = find_dotenv() # automatic find
 load_dotenv(env_path)
 
 # PLEASE CHANGE WHEN CHANGING MODEL
-#LOCAL_STORAGE_PATH =  "/home/stella/code/DSP-Tan/mushroom_learning/our_first_model"
 LOCAL_STORAGE_PATH =  "../our_first_model"
 
 def save_to_gcp():

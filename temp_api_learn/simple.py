@@ -1,7 +1,9 @@
-from fastapi import FastAPI, File, UploadFile
 import numpy as np
 import PIL
-from PIL import Image
+from   PIL           import Image
+from   fastapi       import FastAPI, File, UploadFile
+
+
 
 app = FastAPI()
 
