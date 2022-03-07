@@ -1,40 +1,41 @@
-
-from fastapi import FastAPI,File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
-from mushroom_learning.gcp import get_model
-from tensorflow.keras import utils
-import tensorflow as tf
-from tensorflow import keras
-import cv2 as cv
 import numpy as np
+import PIL
+from   PIL           import Image
+from   fastapi       import FastAPI, File, UploadFile
+
 
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Check root.
+# define a root `/` endpoint
 @app.get("/")
 def index():
-    return {"Don't eat that mushroom!"}
+    return {"ok": "fart"}
 
-# Check file size in Kbytes
-@app.get("/size")
+@app.post("/")
+def post_wrap():
+    return('You have used the post thing.')
+
+
+@app.post("/size")
 async def create_file(file: bytes = File(...)):
     # convert to bytes with bytearray, and to np array
     image = np.asarray(bytearray(file), dtype="uint8")
 
-    # divide by 1000 for Kbytes
+    #return {"file_size": len(file)/1000}
     return f'This file is {len(image)/1000} Kbytes'
 
+@app.post("/shape/")
+async def create_file(file: bytes = File(...)):
+    # convert to bytes with bytearray, and to np array
+    image = np.asarray(bytearray(file), dtype="uint8")
 
-#Api request
+    return image.shape
+
+
+
+
+
 @app.get("/predict")
 def create_file(file: bytes = File(...)):
     #The file is in bytes format. Convert byte to bits.
@@ -46,7 +47,7 @@ def create_file(file: bytes = File(...)):
     # # # #Save the image. Just to check it
     # cv.imwrite('output.png',decode_img)
 
-    model = get_model()
+    model = load_from_gcp()
 
     # # # # # make prediction
     img_height = 224

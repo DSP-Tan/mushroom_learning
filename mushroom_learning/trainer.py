@@ -1,10 +1,10 @@
-from mushroom_learning.data import load_training_data, load_validation_data
-from mushroom_learning.gcp import save_to_gcp, load_from_gcp
-from mushroom_learning.data import get_images_directory
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras.models import Sequential
-from tensorflow.keras import layers
+from mushroom_learning.data import load_training_data, load_validation_data
+from mushroom_learning.gcp  import save_to_gcp, load_from_gcp
+
+from tensorflow                 import keras
+from tensorflow.keras.models    import Sequential
+from tensorflow.keras           import layers
 from tensorflow.keras.callbacks import EarlyStopping
 
 

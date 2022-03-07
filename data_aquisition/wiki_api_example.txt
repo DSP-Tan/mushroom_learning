@@ -1,1 +1,33 @@
+Here is an example api request:
 https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=amanita%20muscaria
+In JSON format it's better:
+https://en.wikipedia.org/w/api.php?format=json&action=query&prop=revisions&rvprop=content&rvsection=0&titles=amanita%20muscaria
+
+You can view that JSON format with a JSON viewer.
+
+This works when you just paste it into a browser but not when you curl it.
+
+rvsection = 0       specifies to only return the lead section.
+action    = parse   This specifies that you get the HTML
+action    = query   This specifies we want to fetch data from and about MediaWiki.
+format    = json    Gives a JSON like we like.
+
+See this for ways to make more intelligent calls. Note we are only extracting the lead 
+section here and this is obviously giving limited information.
+https://www.mediawiki.org/wiki/API:Revisions
+
+
+But this ends up being rather unstructured (see notebook). So we will read more about it in these
+articles:
+
+https://stackoverflow.com/questions/7185288/how-can-i-get-wikipedia-content-using-wikipedias-api
+https://monashdatafluency.github.io/python-web-scraping/section-3-API-based-scraping/
+
+For tomorrow, perhaps we could just post information from these pages:
+https://en.wikipedia.org/wiki/List_of_poisonous_fungus_species
+https://en.wikipedia.org/wiki/Category:Edible_fungi
+
+Depending on whether the mushroom is poisonous or edible.
+
+
+
