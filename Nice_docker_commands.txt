@@ -46,7 +46,7 @@ To remedy this I just moved the raw data and the api files one directory up and 
 # Set environment variables
 
 # project ID
-export PROJECT_ID=replace-with-your-gcloud-project-id
+export PROJECT_ID='omega-clarity-337815'
 gcloud config set project $PROJECT_ID
 
 # name of docker image
