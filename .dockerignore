@@ -8,4 +8,6 @@ __pycache__
 .pytest_cache
 raw_data
 notebooks
+data_aquisition
+requirements.txt
 
