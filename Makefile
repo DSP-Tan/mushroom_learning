@@ -100,4 +100,4 @@ run_api:
 # ----------------------------------
 
 streamlit:
-	-@streamlit run app.py
+	-@streamlit run app/app.py
