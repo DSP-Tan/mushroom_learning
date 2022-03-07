@@ -14,9 +14,10 @@ env_path = find_dotenv() # automatic find
 load_dotenv(env_path)
 
 # PLEASE CHANGE WHEN CHANGING MODEL
-LOCAL_STORAGE_PATH =  "../our_first_model"
+LOCAL_STORAGE_PATH =  "../6_species_model_vgg19_v1"
+STORAGE_LOCATION="models/6_species_model_vgg19_v1"
 
-def save_to_gcp():
+def save_model_to_gcp():
     """Uploads a file to the bucket."""
 
     # make sure you saved your model locally before calling this function! (check save_model in Trainer class)
@@ -33,7 +34,6 @@ def save_to_gcp():
         )
     )
 
-
 def get_model():
     '''
     This retrieves a model from our local storage.
@@ -41,8 +41,9 @@ def get_model():
     print(LOCAL_STORAGE_PATH)
     return keras.models.load_model(LOCAL_STORAGE_PATH)
 
-def load_from_gcp():
+def load_model_from_gcp():
     """Downloads a blob from the bucket."""
+    
     storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
 
     bucket = storage_client.get_bucket(BUCKET_NAME)
@@ -53,3 +54,4 @@ def load_from_gcp():
 
     model = get_model()
     return model
+

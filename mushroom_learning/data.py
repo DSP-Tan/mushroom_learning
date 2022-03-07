@@ -1,14 +1,17 @@
-import    pathlib
-import    os
-import    tensorflow as tf
-from      tensorflow import keras
-from      tensorflow.keras.preprocessing import image_dataset_from_directory
+from mushroom_learning.params import BUCKET_NAME, BUCKET_TRAIN_DATA_PATH
+
+from os.path import join, dirname, abspath
+from dotenv import load_dotenv, find_dotenv
+import pathlib
+from google.cloud import storage
+import os
+import tensorflow as tf
+from tensorflow import keras
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from mushroom_learning.params import BUCKET_NAME, BUCKET_TRAIN_DATA_PATH
-from os.path import join, dirname, abspath
-from dotenv import load_dotenv, find_dotenv
 
+AUTOTUNE = tf.data.AUTOTUNE
 
 # point to .env file
 env_path = join(dirname(abspath(__file__)),'.env') # ../.env
@@ -17,57 +20,84 @@ env_path = find_dotenv() # automatic find
 # load your api key as environment variables
 load_dotenv(env_path)
 
-def get_images_directory(directory):
-    data_dir = pathlib.Path(directory)
+IMG_HEIGHT = 224
+IMG_WIDTH = 224
+BATCH_SIZE = 32
+
+def get_images_directory(path):
+    data_dir = pathlib.Path(path)
     return data_dir
 
-def count_images():
+def count_images(data_dir):
     return len(list(data_dir.glob('*/*.jpg')))
 
-def get_data_from_gcp(nrows=10000, optimize=False, **kwargs):
-    """method to get the training data (or a portion of it) from google cloud bucket"""
-    
-    storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
-
-    bucket = storage_client.bucket(BUCKET_NAME)
-    blob = bucket.blob("fungi_train_val.tgz")
-    contents = blob.download_as_string()
-    return contents
-
 def load_training_data(data_dir):
-    img_height = 224
-    img_width = 224
-    batch_size = 32
-
-    data_dir = get_images_directory()
-
-    return tf.keras.utils.image_dataset_from_directory(
+    
+    train_ds =  tf.keras.utils.image_dataset_from_directory(
       data_dir,
       labels='inferred',
-      label_mode='binary',
       validation_split=0.2,
       subset="training",
       seed=123,
-      image_size=(img_height, img_width),
-      batch_size=batch_size
+      image_size=(IMG_HEIGHT, IMG_WIDTH),
+      batch_size=BATCH_SIZE
     )
-
+    
+    return train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
+       
 def load_validation_data(data_dir):
-    img_height = 224
-    img_width = 224
-    batch_size = 32
 
-    data_dir = get_images_directory()
+    val_ds =  tf.keras.utils.image_dataset_from_directory(
+      data_dir,
+      labels='inferred',
+      validation_split=0.2,
+      subset="validation",
+      seed=123,
+      image_size=(IMG_HEIGHT, IMG_WIDTH),
+      batch_size=BATCH_SIZE
+    )
+    
+    return val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
+def load_testing_data(data_dir):
     return tf.keras.utils.image_dataset_from_directory(
       data_dir,
       labels='inferred',
-      label_mode='binary',
       seed=123,
-      image_size=(img_height, img_width),
-      batch_size=batch_size
+      image_size=(IMG_HEIGHT, IMG_WIDTH),
+      batch_size=BATCH_SIZE
     )
+    
+def get_labels_from_tfdataset(tfdataset, batched=False):
+
+    labels = list(map(lambda x: x[1], tfdataset)) # Get labels 
+
+    if not batched:
+        return tf.concat(labels, axis=0) # concat the list of batched labels
+
+    return labels
+
+def get_inputs_from_tfdataset(tfdataset, batched=False):
+
+    labels = list(map(lambda x: x[0], tfdataset)) # Get labels 
+
+    if not batched:
+        return tf.concat(labels, axis=0) # concat the list of batched labels
+
+    return labels
 
 if __name__ == '__main__':
-    data_dir = get_images_directory()
-    count_images = count_images()
+    data_dir = get_images_directory("../raw_data/mushrooms_species_train_test/train")
+    data_dir_test = get_images_directory("../raw_data/mushrooms_species_train_test/test")
+    
+    count_images_train = count_images(data_dir)
+    count_images_test = count_images(data_dir_test)
+    
+    train_ds = load_training_data(data_dir)
+    val_ds = load_validation_data(data_dir)
+    test_ds = load_testing_data(data_dir_test)
+    
+    
+
+  
+ 
