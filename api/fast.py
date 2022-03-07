@@ -30,9 +30,9 @@ def index():
 
 # Check file size in Kbytes
 @app.get("/size")
-async def create_file(file: bytes = File(...)):
+async def create_file(mush: bytes = File(...)):
     # convert to bytes with bytearray, and to np array
-    image = np.asarray(bytearray(file), dtype="uint8")
+    image = np.asarray(bytearray(mush), dtype="uint8")
 
     return f'This file is {len(image)/1000} Kbytes'
 
@@ -40,8 +40,11 @@ async def create_file(file: bytes = File(...)):
 
 #Api predict request
 @app.get("/predict")
-def create_file(file: bytes = File(...)):
-    im_API=bits_to_model(file)
+def create_file(mush: bytes = File(...)):
+
+    with open(mush, 'rb') as f:
+        im_API = f.read()
+    im_API=bits_to_model(im_API)
 
     model = get_model()
     results = model.predict(im_API)
@@ -56,10 +59,10 @@ def create_file(file: bytes = File(...)):
 def bits_to_model(bits):
     # The model expects an image of this size
     size=(224,224)
-    
+
     # Convert bits to bytes
     im_API=np.asarray(bytearray(bits), dtype="uint8")
-    
+
     # decode byte array back into image, and then adjust
     # for cv's automatic BGR representation
     im_API = cv.imdecode(im_API,cv.IMREAD_COLOR)
@@ -67,7 +70,7 @@ def bits_to_model(bits):
 
     # resize using tensor flow with nearest neighbour interpolation
     im_API=tf.image.resize(im_API,size, method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
-    
+
     # Expand for CNN
     im_API = tf.expand_dims(im_API, 0)
 
