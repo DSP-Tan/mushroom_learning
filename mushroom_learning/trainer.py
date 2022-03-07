@@ -7,9 +7,6 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras import layers
 from tensorflow.keras.callbacks import EarlyStopping
 
-# STELLA 
-from cv2 import cv2 
-import numpy as np
 
 class Trainer(object):
     def __init__(self, train, val):
@@ -78,7 +75,7 @@ class Trainer(object):
         self.history = history
 
     def evaluate_model(self):
-        # precision
+        # add precision
         acc = self.history.history['accuracy']
         val_acc = self.history.history['val_accuracy']
         loss = self.history.history['loss']
@@ -97,50 +94,24 @@ if __name__ == "__main__":
 #    trainer = Trainer(train=train_ds, val=val_ds)
 
 #    save_to_gcp()
-    # model = load_from_gcp()
+    model = load_from_gcp()
    
-    # img_height = 224
-    # img_width = 224
-    # class_names = ['edable', 'poison']
+    img_height = 224
+    img_width = 224
+    class_names = ['edable', 'poison']
 
-    # img = tf.keras.utils.load_img(
-    #     "/Users/laurameyer/Desktop/011_DoZoYI2vj20.jpg", target_size=(img_height, img_width)
-    # )
+    img = tf.keras.utils.load_img(
+        "/Users/laurameyer/Desktop/011_DoZoYI2vj20.jpg", target_size=(img_height, img_width)
+    )
 
-    # img_array = tf.keras.utils.img_to_array(img)
-    # img_array = tf.expand_dims(img_array, 0) # Create a batch
+    img_array = tf.keras.utils.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0) # Create a batch
 
-    # prediction = model.predict(img_array)
-    # print(prediction)
-    # classif = int(prediction > .5)
-    # print(classif)
-    # print(f"This image most likely belongs to {class_names[classif]} with a score of: {prediction[0][0]:.2f}")
-   
-   
-    # STELLA 
-    def create_file(file: bytes = File(...)):
-        #The file is in bytes format. Convert byte to bits.
-        from_byte_to_bits = bytearray(file)
-        #Convert bits to array. You can use
-        from_bits_to_array = np.asarray(from_byte_to_bits, dtype="uint8")
-        #Decode the array to image. This will be used from the model.
-        decode_img = cv2.imdecode(from_bits_to_array,cv2.IMREAD_COLOR)
-        #Save the image. Just to check it
-        # cv2.imwrite('output.png',decode_img)
-        model = load_from_gcp()
-        # # make prediction
-        img_height = 224
-        img_width = 224
-        # decode_img_reshaped = tf.keras.utils.load_img('output.png', target_size=(img_height, img_width)) #Not necessary anymore
-        decode_img_reshaped = cv2.resize(decode_img, (img_height, img_width))
-        # img_array = tf.keras.utils.img_to_array(decode_img_reshaped)
-        img_array = tf.expand_dims(decode_img_reshaped, 0) # Create a batch
-        results = model.predict(img_array)
-        class_names = ['edible', 'poisonous']
-        classif = int(results > .5)
-        output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
-        return output
-        
-    
+    prediction = model.predict(img_array)
+    print(prediction)
+    classif = int(prediction > .5)
+    print(classif)
+    print(f"This image most likely belongs to {class_names[classif]} with a score of: {prediction[0][0]:.2f}")
+
     
 

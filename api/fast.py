@@ -38,18 +38,18 @@ def create_file(file: bytes = File(...)):
     decode_img = cv2.imdecode(from_bits_to_array,cv2.IMREAD_COLOR)
     # print(type(decode_img))
     #Save the image. Just to check it
-    # cv2.imwrite('output.png',decode_img)
+    cv2.imwrite('output.png', decode_img)
 
     model = load_from_gcp()
 
     # # make prediction
     img_height = 224
     img_width = 224
-    # decode_img_reshaped = tf.keras.utils.load_img('output.png', target_size=(img_height, img_width)) #Not necessary anymore
-    decode_img_reshaped = cv2.resize(decode_img, (img_height, img_width))
-    # img_array = tf.keras.utils.img_to_array(decode_img_reshaped)
-    img_array = tf.expand_dims(decode_img_reshaped, 0) # Create a batch
-    results = model.predict(img_array)
+    decode_img_reshaped = tf.keras.utils.load_img('output.png', target_size=(img_height, img_width)) #Not necessary anymore
+    #decode_img_reshaped = cv2.resize(decode_img, (img_height, img_width))  # this changes the prediction!!
+    img_array = tf.keras.utils.img_to_array(decode_img_reshaped)
+    img_array_expand = tf.expand_dims(img_array, 0) # Create a batch
+    results = model.predict(img_array_expand)
     class_names = ['edible', 'poisonous']
     classif = int(results > .5)
     output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"

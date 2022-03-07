@@ -3,12 +3,13 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.preprocessing import image_dataset_from_directory
-import os
 from google.cloud import storage
+import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from mushroom_learning.params import BUCKET_NAME, BUCKET_TRAIN_DATA_PATH
 from os.path import join, dirname, abspath
 from dotenv import load_dotenv, find_dotenv
+
 
 # point to .env file
 env_path = join(dirname(abspath(__file__)),'.env') # ../.env
@@ -27,19 +28,24 @@ def count_images(data_dir):
 def get_data_from_gcp(nrows=10000, optimize=False, **kwargs):
     """method to get the training data (or a portion of it) from google cloud bucket"""
     
-    dataset_url = "https://storage.cloud.google.com/mushroom-bucket-le-wagon/fungi_train_val.tgz"
-    data_dir = tf.keras.utils.get_file('images', origin=dataset_url, untar=True)
-    data_dir = pathlib.Path(data_dir)
-    print(data_dir)
-    return data_dir
-   
-#     print("hey")
-#     storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
-#     print("hey")
-#     path = f"gs://{BUCKET_NAME}/{BUCKET_TRAIN_DATA_PATH}"
-#    # df = pd.read_csv(path, nrows=nrows)
-#    # print(df.shape)
-#     return path
+    storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
+
+    bucket = storage_client.bucket(BUCKET_NAME)
+    blob = bucket.blob("fungi_train_val.tgz")
+    contents = blob.download_as_string()
+    return contents
+
+
+
+    # dataset_url = "https://storage.cloud.google.com/mushroom-bucket-le-wagon/fungi_train_val.tgz"
+    # data_dir = tf.keras.utils.get_file('images', origin=dataset_url, untar=True)
+    # data_dir = pathlib.Path(data_dir)
+    # print(data_dir)
+    # return data_dir
+
+
+
+
 
 def load_training_data(data_dir):
     img_height = 224
