@@ -6,5 +6,6 @@ README.md
 *.ipynb
 __pycache__
 .pytest_cache
-
+raw_data
+notebooks
 

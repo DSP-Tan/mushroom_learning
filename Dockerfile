@@ -1,6 +1,6 @@
 FROM python:3.8.12-buster
 
-COPY temp_api_learn /api
+COPY api /api
 COPY mushroom_learning /mushroom_learning
 COPY our_first_model /our_first_model
 COPY requirements.txt /requirements.txt
