@@ -27,5 +27,5 @@ response = requests.get(URL_size,data=files)
 print(response.json())
 
 print('Response from predict URL:')
-#print(response.json())
-
+response=requests.get(URL_predict,data=files)
+print(response)
