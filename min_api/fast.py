@@ -4,7 +4,7 @@ import numpy      as np
 
 from fastapi                         import FastAPI,File, UploadFile
 from fastapi.middleware.cors         import CORSMiddleware
-from mushroom_learning.local_load    import get_model
+#from mushroom_learning.local_load    import get_model
 
 #from tensorflow               import keras
 #from tensorflow.keras         import utils

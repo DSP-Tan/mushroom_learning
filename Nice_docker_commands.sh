@@ -2,9 +2,15 @@
 # it just makes sure you have permission to use it and will ask
 # for a password each time you run a command preceeded by it.
 
+# Start docker
+sudo service docker start
+
+
 
 # Stop all containers, delete all images, and prune the system.
 docker stop CONTAINER_ID
+
+# Delete all images
 sudo docker rmi --force $(sudo docker images -q)
 sudo docker system prune
 
@@ -62,3 +68,5 @@ docker run -e PORT=8000 -p 8000:8000 eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
 # Push to google container registry
 sudo docker push eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
 
+export PROJECT_ID='omega-clarity-337815'
+export DOCKER_IMAGE_NAME=mushroom-docker
