@@ -1,5 +1,5 @@
 from mushroom_learning.params import BUCKET_NAME, STORAGE_LOCATION
-
+from tensorflow               import keras
 
 # PLEASE CHANGE WHEN CHANGING MODEL
 LOCAL_STORAGE_PATH =  "../our_first_model"
