@@ -8,6 +8,7 @@ wheel>=0.29
 numpy
 pandas
 tensorflow
+keras
 
 # tests/linter
 black

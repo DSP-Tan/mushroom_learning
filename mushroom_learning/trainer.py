@@ -1,17 +1,13 @@
 
 from mushroom_learning.data import  get_images_directory, load_validation_data, load_training_data, load_testing_data, get_labels_from_tfdataset, get_inputs_from_tfdataset, IMG_HEIGHT, IMG_WIDTH, BATCH_SIZE
-from mushroom_learning.gcp import save_model_to_gcp, load_model_from_gcp, LOCAL_STORAGE_PATH
-
-from keras.preprocessing.image import ImageDataGenerator
+from mushroom_learning.gcp import save_model_to_gcp, load_model_from_gcp
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import optimizers
 import tensorflow as tf
 from tensorflow.keras.applications.vgg19 import VGG19
 from tensorflow.keras import layers, models
 from tensorflow.keras.callbacks import EarlyStopping
 import matplotlib.pyplot as plt
-from tensorflow import keras
-# from tensorflow.keras.models    import Sequential
-
 
 class Trainer(object):
     def __init__(self, train_ds, val_ds, test_ds, input_shape = (224, 224, 3)):
@@ -49,8 +45,8 @@ class Trainer(object):
     
     def load_model(self):
 
-        model = tf.keras.applications.VGG19(weights="imagenet", include_top=False, input_shape=self.input_shape, classes=self.num_classes, classifier_activation="softmax")
-        
+        model = VGG19(weights="imagenet", include_top=False, input_shape=self.input_shape, classes=self.num_classes, classifier_activation="softmax")
+        # tf.keras.applications.
         return model
     
     def set_nontrainable_layers(self, model):
@@ -59,7 +55,6 @@ class Trainer(object):
         
         return model
     
-
     def add_last_layers(self, model):
         '''Take a pre-trained model, set its parameters as non-trainables, and add additional trainable layers on top'''
         base_model = self.set_nontrainable_layers(model)
@@ -109,8 +104,8 @@ class Trainer(object):
         
         self.history = history 
     
-    def save_model(self):
-        self.model.save(LOCAL_STORAGE_PATH)
+    def save_model(self, local_storage_path):
+        self.model.save(local_storage_path)
         save_model_to_gcp()
     
     def run(self):
@@ -127,6 +122,17 @@ class Trainer(object):
     
         
 if __name__ == "__main__": 
+    
+    # storage_location = "models/model_species_simple_0.815"
+    # local_path_to_model = "../model_species_simple_0.815"
+    # save_model_to_gcp(local_path_to_model, storage_location)
+    
+    
+    # storage_location1 = "models/model_poison_simple_0.68"
+    # local_path_to_model1 = "../model_poison_simple_0.68"
+    # save_model_to_gcp(local_path_to_model1, storage_location1)
+    
+    
     # get data 
     print("getting data")
     data_dir = get_images_directory("../raw_data/mushrooms_species_train_test/train")
@@ -144,12 +150,14 @@ if __name__ == "__main__":
     trainer = Trainer(train_ds, val_ds, test_ds)
     trainer.run()
     
-    print("saving model")
-    trainer.save_model()
-    print("saved")
+    # print("saving model")
+    #local_storage_path = 
+    # trainer.save_model(local_storage_path)
+    # print("saved")
     
     
-    # 
+    # EVALUATION 
+    
     #accuracy = trainer.evaluate()
     #print("evaluating")
    # print(accuracy)

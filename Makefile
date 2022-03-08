@@ -84,7 +84,8 @@ PACKAGE_NAME=mushroom_learning
 
 # for gcp_submit_training
 JOB_NAME=mushroom_pipeline_$(shell date +'%Y%m%d_%H%M%S')
-BUCKET_TRAINING_FOLDER=models/6_species_model_vgg19_v1
+# change version if you train a new model 
+BUCKET_TRAINING_FOLDER=models/model_6_species_vgg19_v1
 FILENAME=trainer
 REGION=europe-west1
 PYTHON_VERSION=3.7
@@ -101,7 +102,6 @@ create_bucket:
 upload_data:
 	-@gsutil cp ${LOCAL_PATH} gs://${BUCKET_NAME}/${BUCKET_FOLDER}/${BUCKET_FILE_NAME}
 
-
 run_api:
 	uvicorn api.fast:app --reload  # load web server with code autoreload
 
@@ -114,7 +114,6 @@ gcp_submit_training:
 		--runtime-version=${RUNTIME_VERSION} \
 		--region ${REGION} \
 		--stream-logs
-
 
 # ----------------------------------
 #     Streamlit
