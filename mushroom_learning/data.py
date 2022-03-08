@@ -11,7 +11,6 @@ from tensorflow import keras
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from mushroom_learning.params import BUCKET_NAME, BUCKET_TRAIN_DATA_PATH
 
-AUTOTUNE = tf.data.AUTOTUNE
 
 # point to .env file
 env_path = join(dirname(abspath(__file__)),'.env') # ../.env
@@ -33,7 +32,7 @@ def count_images(data_dir):
 
 def load_training_data(data_dir):
     
-    train_ds =  tf.keras.utils.image_dataset_from_directory(
+    return tf.keras.utils.image_dataset_from_directory(
       data_dir,
       labels='inferred',
       validation_split=0.2,
@@ -43,11 +42,10 @@ def load_training_data(data_dir):
       batch_size=BATCH_SIZE
     )
     
-    return train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
        
 def load_validation_data(data_dir):
 
-    val_ds =  tf.keras.utils.image_dataset_from_directory(
+    return tf.keras.utils.image_dataset_from_directory(
       data_dir,
       labels='inferred',
       validation_split=0.2,
@@ -57,7 +55,6 @@ def load_validation_data(data_dir):
       batch_size=BATCH_SIZE
     )
     
-    return val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
 def load_testing_data(data_dir):
     return tf.keras.utils.image_dataset_from_directory(
