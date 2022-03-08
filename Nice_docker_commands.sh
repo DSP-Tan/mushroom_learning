@@ -31,11 +31,11 @@ docker stop 152e5b79177b  # ⚠️ use the correct CONTAINER ID
 docker kill 152e5b79177b  # ☢️ only if the image refuses to stop (did someone create an ∞ loop?)
 
 # Note
-Docker appears to be copying everything from this folder to the image. When it did this it copied
-the raw_data file, and some other things I didn't want and my computer was running out of memory
-before it could finish.
+#Docker appears to be copying everything from this folder to the image. When it did this it copied
+#the raw_data file, and some other things I didn't want and my computer was running out of memory
+#before it could finish.
 
-To remedy this I just moved the raw data and the api files one directory up and then did the command.
+#To remedy this I just moved the raw data and the api files one directory up and then did the command.
 
 #########################################
 ########## Setting up GCR ###############

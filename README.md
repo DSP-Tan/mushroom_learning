@@ -235,7 +235,7 @@ https://towardsdatascience.com/computer-vision-lets-classify-mushrooms-6b3abe156
 
 ### Use the webscraping described by the finnish people.
 
-See their GitHub for that.
+https://tuomonieminen.github.io/deep-shrooms/
 
 ### give up commercial rights and use image net.
 

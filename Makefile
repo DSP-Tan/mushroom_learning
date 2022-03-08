@@ -121,4 +121,4 @@ gcp_submit_training:
 # ----------------------------------
 
 streamlit:
-	-@streamlit run app.py
+	-@streamlit run app/app.py
