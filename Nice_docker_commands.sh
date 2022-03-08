@@ -77,3 +77,5 @@ gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform ma
 
 export PROJECT_ID='omega-clarity-337815'
 export DOCKER_IMAGE_NAME=mushroom-docker
+
+docker build ... --output /dev/shm
