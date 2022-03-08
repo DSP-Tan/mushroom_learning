@@ -5,6 +5,8 @@
 # Start docker
 sudo service docker start
 
+#Show all docker images
+docker images -a
 
 
 # Stop all containers, delete all images, and prune the system.
@@ -67,6 +69,11 @@ docker run -e PORT=8000 -p 8000:8000 eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
 
 # Push to google container registry
 sudo docker push eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
+
+# Deploy on google cloud
+gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform managed --region europe-west1
+
+
 
 export PROJECT_ID='omega-clarity-337815'
 export DOCKER_IMAGE_NAME=mushroom-docker
