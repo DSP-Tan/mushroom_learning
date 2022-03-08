@@ -8,6 +8,7 @@ wheel>=0.29
 numpy
 pandas
 tensorflow
+keras
 
 # tests/linter
 black
@@ -26,7 +27,7 @@ opencv-python
 # utilities
 six>=1.14
 termcolor
-pathlib
+split-folders
 
 # front-end
 streamlit
@@ -35,3 +36,4 @@ requests
 
 # plotting
 python-dotenv
+matplotlib

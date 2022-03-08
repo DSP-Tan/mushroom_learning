@@ -79,7 +79,19 @@ BUCKET_FOLDER=data
 # BUCKET_FILE_NAME=another_file_name_if_I_so_desire.csv
 BUCKET_FILE_NAME=$(shell basename ${LOCAL_PATH})
 
+PACKAGE_NAME=mushroom_learning
+
+
+# for gcp_submit_training
+JOB_NAME=mushroom_pipeline_$(shell date +'%Y%m%d_%H%M%S')
+# change version if you train a new model 
+BUCKET_TRAINING_FOLDER=models/model_6_species_vgg19_v1
+FILENAME=trainer
 REGION=europe-west1
+PYTHON_VERSION=3.7
+RUNTIME_VERSION=1.15
+REGION=europe-west1
+
 
 set_project:
 	-@gcloud config set project ${PROJECT_ID}
@@ -90,10 +102,18 @@ create_bucket:
 upload_data:
 	-@gsutil cp ${LOCAL_PATH} gs://${BUCKET_NAME}/${BUCKET_FOLDER}/${BUCKET_FILE_NAME}
 
-
 run_api:
 	uvicorn api.fast:app --reload  # load web server with code autoreload
 
+gcp_submit_training:
+	gcloud ai-platform jobs submit training ${JOB_NAME} \
+		--job-dir gs://${BUCKET_NAME}/${BUCKET_TRAINING_FOLDER} \
+		--package-path ${PACKAGE_NAME} \
+		--module-name ${PACKAGE_NAME}.${FILENAME} \
+		--python-version=${PYTHON_VERSION} \
+		--runtime-version=${RUNTIME_VERSION} \
+		--region ${REGION} \
+		--stream-logs
 
 # ----------------------------------
 #     Streamlit

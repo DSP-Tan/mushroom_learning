@@ -5,6 +5,7 @@ COPY mushroom_learning /mushroom_learning
 COPY our_first_model /our_first_model
 COPY smaller_docker_requirements.txt /requirements.txt
 
+#RUN pip3 install pathlib==1.0.1
 RUN pip install -r requirements.txt
 
 # These commands are necessary for open-cv, which
