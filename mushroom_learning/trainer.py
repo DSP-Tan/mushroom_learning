@@ -7,15 +7,13 @@ from mushroom_learning.gcp import save_model_to_gcp, LOCAL_PATH_TO_MODEL, STORAG
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import optimizers
 import tensorflow as tf
-from tensorflow.keras.applications.vgg19 import VGG19
+from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras import layers, models
 from tensorflow.keras.callbacks import EarlyStopping
 import matplotlib.pyplot as plt
 
-
 class Trainer(object):
     def __init__(self, train_ds, val_ds, test_ds, input_shape = (224, 224, 3)):
-        
         self.X_train = get_inputs_from_tfdataset(train_ds)
         self.y_train = get_labels_from_tfdataset(train_ds)
         self.X_val = get_inputs_from_tfdataset(val_ds)
@@ -31,7 +29,6 @@ class Trainer(object):
         self.num_classes = len(train_ds.class_names)
 
     def data_augmentation(self):
-        
         datagen = ImageDataGenerator(
             featurewise_center = False,
             featurewise_std_normalization = False,
@@ -48,17 +45,11 @@ class Trainer(object):
         self.val_flow = datagen.flow(self.X_val, self.y_val, batch_size=32)
     
     def load_model(self):
-
-        self.model = VGG19(weights="imagenet", include_top=False, input_shape=self.input_shape, classes=self.num_classes, classifier_activation="softmax")
-        
-        # tf.keras.applications.
-        
-
-        
+        self.model = VGG16(weights="imagenet", include_top=False, input_shape=self.input_shape, classes=self.num_classes, classifier_activation="softmax")
+      
     def set_nontrainable_layers(self):
         self.model.trainable = False
         return self.model
-    
     
     def add_last_layers(self):
         '''Take a pre-trained model, set its parameters as non-trainables, and add additional trainable layers on top'''
@@ -69,11 +60,7 @@ class Trainer(object):
         dense_layer_2 = layers.Dense(20, activation='relu')
         prediction_layer = layers.Dense(self.num_classes, activation='softmax')
         rescaling = layers.Rescaling(1./255)
-        
-        print(type(base_model))
 
-        
-        #print(type(self.model))
         self.model = models.Sequential([
             rescaling,
             base_model,
@@ -83,19 +70,14 @@ class Trainer(object):
             dense_layer_2,
             prediction_layer
         ])
-        
-     
-        
-    
+
     def build_model(self): 
- 
         opt = optimizers.Adam(learning_rate=1e-4)
         
         self.model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                     optimizer=opt,
                     metrics=['accuracy'])
 
-    
     def fit_model(self):
         es = EarlyStopping(monitor = 'val_accuracy', 
                    mode = 'max', 
@@ -113,7 +95,7 @@ class Trainer(object):
         self.history = history 
     
     def save_model(self):
-        self.model.save()
+        self.model.save(LOCAL_PATH_TO_MODEL)
         save_model_to_gcp()
     
     def run(self):
@@ -132,8 +114,7 @@ class Trainer(object):
         plt.plot(self.history.history['accuracy'])
         plt.plot(self.history.history['val_accuracy'])
         plt.show()
-    
-        
+
 if __name__ == "__main__": 
     
     # storage_location = "models/model_species_simple_0.815"
@@ -165,6 +146,7 @@ if __name__ == "__main__":
     trainer.save_model()
     print("saved")
     
+    #load model from local storage 
     
     # EVALUATION 
     
@@ -172,17 +154,6 @@ if __name__ == "__main__":
     #print("evaluating")
    # print(accuracy)
     #trainer.history.history['val_acc']
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
     
 #    val_ds = load_validation_data()
 #    print(type(val_ds))
