@@ -1,5 +1,6 @@
 Dockerfile
 README.md
+requirements.txt
 *.pyc
 *.pyo
 *.pyd
@@ -9,5 +10,5 @@ __pycache__
 raw_data
 notebooks
 data_aquisition
-requirements.txt
-
+app
+min_api

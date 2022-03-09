@@ -1,4 +1,8 @@
+import os
+import io
 import tensorflow as tf
+import PIL
+import base64
 import cv2        as cv
 import numpy      as np
 
@@ -30,52 +34,51 @@ def index():
 
 # Check file size in Kbytes
 @app.get("/size")
-async def create_file(mush: bytes = File(...)):
+def check_size(mush: bytes = File(...)):
+    #Check type of image as it arrives.
+    print(
+         f'''
+         --------------------------------------------------------------\n
+         --------------------------------------------------------------\n
+         \n\n\nAfter being passed to API, file has tpye: {type(mush)}\n
+         The file has length {len(mush)}
+         '''
+         )
     # convert to bytes with bytearray, and to np array
-    image = np.asarray(bytearray(mush), dtype="uint8")
+    #image = np.asarray(bytearray(mush), dtype="uint8")
+    decoded_mush=base64.decodebytes(mush)
 
-    return f'This file is {len(image)/1000} Kbytes'
-
+    return f'This file is {len(decoded_mush)/1000} Kbytes and type {type(decoded_mush)}'
 
 
 #Api predict request
 @app.get("/predict")
-<<<<<<< HEAD
-def create_file(file: bytes = File(...)):
-    #The file is in bytes format. Convert byte to bits.
-    # from_byte_to_bits = bytearray(file)
-    # # # # # #Convert bits to array.
-    # from_bits_to_array = np.asarray(from_byte_to_bits, dtype="uint8")
-    # # # # #Decode the array to image. This will be used from the model.
-    # decode_img = cv.imdecode(from_bits_to_array,cv.IMREAD_COLOR)
-    # # # # #Save the image. Just to check it
-    # cv.imwrite('output.png',decode_img)
-
-    model = load_from_gcp()
-
-    # # # # # make prediction
-    img_height = 224
-    img_width = 224
-    decode_img_reshaped = tf.keras.utils.load_img('output.png', target_size=(img_height, img_width))
-    # # # decode_img_reshaped = cv.resize(decode_img, (img_height, img_width))
-    img_array = tf.keras.utils.img_to_array(decode_img_reshaped)
-    img_array_expand = tf.expand_dims(img_array, 0) # Create a batch
-    results = model.predict(img_array_expand)
-=======
 def create_file(mush: bytes = File(...)):
+    # decode Base64 encoded bytes
+    decoded_mush=base64.decodebytes(mush)
 
-    with open(mush, 'rb') as f:
-        im_API = f.read()
-    im_API=bits_to_model(im_API)
-
-    model = get_model()
-    results = model.predict(im_API)
->>>>>>> 9f3483a068089ca3f03e4c53706d52dd70fcdc0a
-    class_names = ['edible', 'poisonous']
-    classif = int(results > .5)
-    output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
-    return output
-
+    # preprocess for image to be in form required by model
+    im_API=bits_to_model(decoded_mush)
+    
+    # Confirm we have the correct type here.
+    im_type=type(im_API); shape=im_API.shape; descrip='Tensorflow expanded image'
+    print(f'{descrip:26} {str(im_type):56} {str(shape):30}')
+    
+    print(f'\n\n---------------------------------------')
+    print('Load model')
+    print(f'-------------------------------------------\n\n')
+    model=get_model()
+    modle=model_species_vgg_v1
+    print(f'-------------------------------------------\n\n')
+    LOCAL_PATH_TO_MODEL='model_species_vgg_v1'
+    keras.models.load_model(LOCAL_PATH_TO_MODEL)
+    model=keras.models.load_model()
+    #results = model.predict(im_API)
+    #class_names = ['edible', 'poisonous']
+    #classif = int(results > .5)
+    #output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
+    #return output
+    return 'Where the model at?'
 
 
 # Take image from bits to model-ready
@@ -98,3 +101,6 @@ def bits_to_model(bits):
     im_API = tf.expand_dims(im_API, 0)
 
     return im_API
+
+
+
