@@ -53,7 +53,6 @@ def check_size(mush: bytes = File(...)):
 
 #Api predict request
 @app.get("/predict")
-def create_file(mush: bytes = File(...)):
     
     # decode Base64 encoded bytes
     decoded_mush=base64.decodebytes(mush)
