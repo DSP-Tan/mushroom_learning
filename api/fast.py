@@ -1,7 +1,6 @@
 import os
 import io
 import tensorflow as tf
-import PIL
 import base64
 import random
 import cv2        as cv
