@@ -47,14 +47,20 @@ def Wiki_Api(mushroom_name):
     if 'whichGills' in line:
       mushroom_dict["whichGills"] = line.split('=')[1].strip(" ")
     if 'capShape' in line:
-      mushroom_dict["capShape"] = line.split('=')[1].strip(" ")
-    if 'hymeniumType' in line:
-      mushroom_dict["hymeniumType"] = line.split('=')[1].strip(" ")
-    if 'stipeCharacter' in line:
-      mushroom_dict["stipeCharacter"] = line.split('=')[1].strip(" ")
-    if 'ecologicalType' in line:
-      mushroom_dict["ecologicalType"] = line.split('=')[1].strip(" ")
-    if 'sporePrintColor'  in line:
-      mushroom_dict["sporePrintColor"] = line.split('=')[1].strip(" ")
+       mushroom_dict["capShape"] = line.split('=')[1].strip(" ")
+    # if 'hymeniumType' in line:
+    #   mushroom_dict["hymeniumType"] = line.split('=')[1].strip(" ")
+    # if 'stipeCharacter' in line:
+    #   mushroom_dict["stipeCharacter"] = line.split('=')[1].strip(" ")
+    # if 'ecologicalType' in line:
+    #   mushroom_dict["ecologicalType"] = line.split('=')[1].strip(" ")
+    # if 'sporePrintColor'  in line:
+    #   mushroom_dict["sporePrintColor"] = line.split('=')[1].strip(" ")
 
   return (mushroom_dict)
+
+
+def pic_to_dict(dic_item):
+  folder_loc = "Wiki_images" #where we will retrieve the files from
+  root_folder = "/Users/burty/code/DSP-Tan/mushroom_learning/app/"
+  return f"{root_folder}/{folder_loc}/{dic_item}.jpeg"
