@@ -12,8 +12,8 @@ load_dotenv(env_path)
 
 
 # CHANGE IF NEW MODEL
-LOCAL_PATH_TO_MODEL = "../model_species_simple_0.815"
-STORAGE_LOCATION_GCU = "models/model_species_simple_0.815"
+LOCAL_PATH_TO_MODEL = "../model_species_vgg16"
+STORAGE_LOCATION_GCU = "models/model_species_vgg16"
 
 def save_model_to_gcp():
     """Uploads a file to the bucket."""
@@ -49,6 +49,6 @@ def load_model_from_gcp():
     model = get_model()
     return model
 
-if __name__ == '__main__':
-    model = load_model_from_gcp()
-    print(type(model))
+#if __name__ == '__main__':
+    #model = load_model_from_gcp()
+    #print(type(model))
