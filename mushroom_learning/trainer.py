@@ -3,7 +3,7 @@ from os.path import dirname, abspath, join
 sys.path.append(join(dirname(abspath(__file__)), ".."))
 
 from mushroom_learning.data import get_images_directory, load_validation_data, load_training_data, load_testing_data, get_labels_from_tfdataset, get_inputs_from_tfdataset, IMG_HEIGHT, IMG_WIDTH, BATCH_SIZE
-from mushroom_learning.gcp import save_model_to_gcp, LOCAL_PATH_TO_MODEL, STORAGE_LOCATION_GCU 
+from mushroom_learning.gcp import save_model_to_gcp
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import optimizers
 import tensorflow as tf
@@ -11,6 +11,8 @@ from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras import layers, models
 from tensorflow.keras.callbacks import EarlyStopping
 import matplotlib.pyplot as plt
+
+LOCAL_PATH_TO_MODEL = "../model_species_vgg16_v1"
 
 class Trainer(object):
     def __init__(self, train_ds, val_ds, test_ds, input_shape = (224, 224, 3)):
@@ -53,11 +55,12 @@ class Trainer(object):
     
     def add_last_layers(self):
         '''Take a pre-trained model, set its parameters as non-trainables, and add additional trainable layers on top'''
+        initializer = tf.keras.initializers.GlorotUniform(seed=0)
         base_model = self.set_nontrainable_layers()
         dropout_layer = layers.Dropout(0.2)
         flatten_layer = layers.Flatten()
-        dense_layer_1 = layers.Dense(50, activation='relu')
-        dense_layer_2 = layers.Dense(20, activation='relu')
+        dense_layer_1 = layers.Dense(50, activation='relu', kernel_initializer=initializer)
+        dense_layer_2 = layers.Dense(20, activation='relu', kernel_initializer=initializer)
         prediction_layer = layers.Dense(self.num_classes, activation='softmax')
         rescaling = layers.Rescaling(1./255)
 
@@ -72,7 +75,7 @@ class Trainer(object):
         ])
 
     def build_model(self): 
-        opt = optimizers.Adam(learning_rate=1e-4)
+        opt = optimizers.Adam(learning_rate=5e-4)
         
         self.model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                     optimizer=opt,
