@@ -40,6 +40,28 @@ async def create_file(mush: bytes = File(...)):
 
 #Api predict request
 @app.get("/predict")
+<<<<<<< HEAD
+def create_file(file: bytes = File(...)):
+    #The file is in bytes format. Convert byte to bits.
+    # from_byte_to_bits = bytearray(file)
+    # # # # # #Convert bits to array.
+    # from_bits_to_array = np.asarray(from_byte_to_bits, dtype="uint8")
+    # # # # #Decode the array to image. This will be used from the model.
+    # decode_img = cv.imdecode(from_bits_to_array,cv.IMREAD_COLOR)
+    # # # # #Save the image. Just to check it
+    # cv.imwrite('output.png',decode_img)
+
+    model = load_from_gcp()
+
+    # # # # # make prediction
+    img_height = 224
+    img_width = 224
+    decode_img_reshaped = tf.keras.utils.load_img('output.png', target_size=(img_height, img_width))
+    # # # decode_img_reshaped = cv.resize(decode_img, (img_height, img_width))
+    img_array = tf.keras.utils.img_to_array(decode_img_reshaped)
+    img_array_expand = tf.expand_dims(img_array, 0) # Create a batch
+    results = model.predict(img_array_expand)
+=======
 def create_file(mush: bytes = File(...)):
 
     with open(mush, 'rb') as f:
@@ -48,6 +70,7 @@ def create_file(mush: bytes = File(...)):
 
     model = get_model()
     results = model.predict(im_API)
+>>>>>>> 9f3483a068089ca3f03e4c53706d52dd70fcdc0a
     class_names = ['edible', 'poisonous']
     classif = int(results > .5)
     output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"

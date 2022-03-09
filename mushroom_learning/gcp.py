@@ -40,9 +40,7 @@ def get_model():
 
 def load_model_from_gcp():
     """Downloads a blob from the bucket."""
-
     storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
-
     bucket = storage_client.get_bucket(BUCKET_NAME)
     blobs = bucket.list_blobs(prefix=STORAGE_LOCATION_GCU)  # Get list of files
     for blob in blobs:
