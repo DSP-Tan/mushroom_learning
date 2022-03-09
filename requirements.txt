@@ -7,8 +7,8 @@ wheel>=0.29
 # data science
 numpy
 pandas
-scikit-learn
 tensorflow
+keras
 
 # tests/linter
 black
@@ -18,10 +18,7 @@ pytest
 yapf
 
 # API
-gcsfs
 google-cloud-storage
-mlflow
-s3fs
 uvicorn
 fastapi
 python-multipart
@@ -29,10 +26,8 @@ opencv-python
 
 # utilities
 six>=1.14
-joblib
-memoized-property
 termcolor
-pathlib
+split-folders
 
 # front-end
 streamlit
@@ -43,6 +38,5 @@ wikipedia
 
 
 # plotting
-matplotlib
-seaborn
 python-dotenv
+matplotlib

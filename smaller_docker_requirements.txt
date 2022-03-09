@@ -1,0 +1,37 @@
+# packaging
+pip>=9
+setuptools>=26
+twine
+wheel>=0.29
+
+# data science
+numpy
+pandas
+tensorflow
+
+# tests/linter
+black
+coverage
+flake8
+pytest
+yapf
+
+# API
+google-cloud-storage
+uvicorn
+fastapi
+python-multipart
+opencv-python
+
+# utilities
+six>=1.14
+termcolor
+pathlib
+
+# front-end
+streamlit
+watchdog
+requests
+
+# plotting
+python-dotenv
