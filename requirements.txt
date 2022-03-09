@@ -33,6 +33,9 @@ split-folders
 streamlit
 watchdog
 requests
+json
+wikipedia
+
 
 # plotting
 python-dotenv
