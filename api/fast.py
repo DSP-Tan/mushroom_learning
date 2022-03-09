@@ -3,6 +3,7 @@ import io
 import tensorflow as tf
 import PIL
 import base64
+import random
 import cv2        as cv
 import numpy      as np
 
@@ -51,8 +52,8 @@ def check_size(mush: bytes = File(...)):
     return f'This file is {len(decoded_mush)/1000} Kbytes and type {type(decoded_mush)}'
 
 
-#Api predict request
-@app.get("/predict")
+#Api poison predict request
+@app.get("/poison")
 def create_file(mush: bytes = File(...)):
     # decode Base64 encoded bytes
     decoded_mush=base64.decodebytes(mush)
@@ -77,6 +78,24 @@ def create_file(mush: bytes = File(...)):
     output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
     return output
 
+#Api species request
+@app.get("/species")
+def create_file(mush: bytes = File(...)):
+    # decode Base64 encoded bytes
+    decoded_mush=base64.decodebytes(mush)
+
+    # preprocess for image to be in form required by model
+    im_API=bits_to_model(decoded_mush)
+    
+    # Temporary stop gap.
+    probability=99.9999999999
+    names={'amanita_muscaria', 'amanita_virosa', 'boletus_edulis', 'cantharellus_cibarius', 'russula_mairei', 'trametes_versicolor'}
+    name = random.choice(tuple(names))
+    # random item from set
+    print(name)
+    # Output 65
+
+    return (name,probability)
 
 # Take image from bits to model-ready
 def bits_to_model(bits):
