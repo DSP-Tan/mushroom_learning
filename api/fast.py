@@ -2,6 +2,7 @@ import os
 import io
 import tensorflow as tf
 import PIL
+import base64
 import cv2        as cv
 import numpy      as np
 
@@ -34,79 +35,61 @@ def index():
 # Check file size in Kbytes
 @app.get("/size")
 def check_size(mush: bytes = File(...)):
+    #Check type of image as it arrives.
+    print(
+         f'''
+         --------------------------------------------------------------\n
+         --------------------------------------------------------------\n
+         \n\n\nAfter being passed to API, file has tpye: {type(mush)}\n
+         The file has length {len(mush)}
+         '''
+         )
     # convert to bytes with bytearray, and to np array
-    image = np.asarray(bytearray(mush), dtype="uint8")
+    #image = np.asarray(bytearray(mush), dtype="uint8")
+    decoded_mush=base64.decodebytes(mush)
 
-    return f'This file is {len(image)/1000} Kbytes'
-
-@app.post("/uploadfile/")
-async def create_upload_file(mush: UploadFile):
-    return {"filename": mush.filename}
+    return f'This file is {len(decoded_mush)/1000} Kbytes and type {type(decoded_mush)}'
 
 
 #Api predict request
 @app.get("/predict")
 def create_file(mush: bytes = File(...)):
+    
+    # decode Base64 encoded bytes
+    decoded_mush=base64.decodebytes(mush)
 
-    #with open(mush, 'rb') as f:
-    #    im_API = f.read()
-    im_API=bits_to_model(mush)
-
-    model = get_model()
-    results = model.predict(im_API)
-    class_names = ['edible', 'poisonous']
-    classif = int(results > .5)
-    output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
-    return output
-
+    # preprocess for image to be in form required by model
+    im_API=bits_to_model(decoded_mush)
+    
+    # Confirm we have the correct type here.
+    im_type=type(im_API); shape=im_API.shape; descrip='Tensorflow expanded image'
+    print(f'{descrip:26} {str(im_type):56} {str(shape):30}')
+    
+    print(f'\n\n---------------------------------------')
+    print('Load model')
+    print(f'-------------------------------------------\n\n')
+    #model=keras.models.load_model('our_first_model/')
+    print(f'-------------------------------------------\n\n')
+    
+    #results = model.predict(im_API)
+    #class_names = ['edible', 'poisonous']
+    #classif = int(results > .5)
+    #output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
+    #return output
+    return 'Where the model at?'
 
 
 # Take image from bits to model-ready
 def bits_to_model(bits):
     # The model expects an image of this size
     size=(224,224)
-    print('In bits to model')
-    print(f'{len(bits)} {type(bits)}\n\n\n')
-    
-    #image_path=os.path.join(os.getcwd(),'anus.fart')
-    #with open(image_path,"wb") as f:
-    #    f.write(bits)
-    #print('bytes written to file')
-    
-    #bytes = bits
-    #f = open("anus.jpg", "wb")
-    #f.write(bytes)
-    #f.close()
-
-
-    # creating a image object (main image)
-    #print(f'\n\n\ntry to open with PIL')
-    #im_API=PIL.Image.open(bits)
-    #print(f'{len(im_API)} {type(im_API)}\n\n\n')
-    # save a image using extension
-    #bits.save("geeks.jpg")
 
     # Convert bits to bytes
     im_API=np.asarray(bytearray(bits), dtype="uint8")
-    print('\n\n\nConvert to bytes')
-    print(f'{len(im_API)} {type(im_API)}\n\n\n')
-    
-    # Decoding with PIL
-    #print('Try pre PIL step')
-    #im_API = PIL.Image.frombuffer("I;16", (5, 10), im_API, "raw", "I;12")
-    #print(f'{len(im_API)} {type(im_API)}\n\n\n')
-
-    #print('Start decoding with PIL')
-    #im_API = PIL.Image.open( io.BytesIO(im_API).seek(0) )
-    
-    #print(f'\n\n\n{len(im_API)} {type(im_API)}\n\n\n')
-    #im_API = np.asarray(im_API)
 
     # decode byte array back into image, and then adjust
     # for cv's automatic BGR representation
-    print(cv.imdecode(im_API,cv.IMREAD_COLOR))
     im_API = cv.imdecode(im_API,cv.IMREAD_COLOR)
-    print(f'\n\n\n{len(im_API)} {type(im_API)}\n\n\n')
     im_API = cv.cvtColor(im_API , cv.COLOR_BGR2RGB)
 
     # resize using tensor flow with nearest neighbour interpolation
@@ -116,3 +99,6 @@ def bits_to_model(bits):
     im_API = tf.expand_dims(im_API, 0)
 
     return im_API
+
+
+
