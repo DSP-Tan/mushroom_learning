@@ -38,6 +38,9 @@ pathlib
 streamlit
 watchdog
 requests
+json
+wikipedia
+
 
 # plotting
 matplotlib

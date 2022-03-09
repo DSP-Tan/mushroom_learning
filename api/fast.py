@@ -28,12 +28,12 @@ def index():
 @app.get("/predict")
 def create_file(file: bytes = File(...)):
     #The file is in bytes format. Convert byte to bits.
-    from_byte_to_bits = bytearray(file)
-    # # # # #Convert bits to array.
-    from_bits_to_array = np.asarray(from_byte_to_bits, dtype="uint8")
-    # # # #Decode the array to image. This will be used from the model.
-    decode_img = cv.imdecode(from_bits_to_array,cv.IMREAD_COLOR)
-    # # # #Save the image. Just to check it
+    # from_byte_to_bits = bytearray(file)
+    # # # # # #Convert bits to array.
+    # from_bits_to_array = np.asarray(from_byte_to_bits, dtype="uint8")
+    # # # # #Decode the array to image. This will be used from the model.
+    # decode_img = cv.imdecode(from_bits_to_array,cv.IMREAD_COLOR)
+    # # # # #Save the image. Just to check it
     # cv.imwrite('output.png',decode_img)
 
     model = load_from_gcp()
