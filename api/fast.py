@@ -64,21 +64,18 @@ def create_file(mush: bytes = File(...)):
     im_type=type(im_API); shape=im_API.shape; descrip='Tensorflow expanded image'
     print(f'{descrip:26} {str(im_type):56} {str(shape):30}')
     
+    # Load the model.
     print(f'\n\n---------------------------------------')
     print('Load model')
     print(f'-------------------------------------------\n\n')
-    model=get_model()
-    modle=model_species_vgg_v1
-    print(f'-------------------------------------------\n\n')
-    LOCAL_PATH_TO_MODEL='model_species_vgg_v1'
-    keras.models.load_model(LOCAL_PATH_TO_MODEL)
-    model=keras.models.load_model()
-    #results = model.predict(im_API)
-    #class_names = ['edible', 'poisonous']
-    #classif = int(results > .5)
-    #output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
-    #return output
-    return 'Where the model at?'
+    model=keras.models.load_model('our_first_model/')
+    
+    # Print the results.
+    results = model.predict(im_API)
+    class_names = ['edible', 'poisonous']
+    classif = int(results > .5)
+    output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
+    return output
 
 
 # Take image from bits to model-ready
