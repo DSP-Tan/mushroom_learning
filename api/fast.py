@@ -8,7 +8,6 @@ import numpy      as np
 
 from fastapi                  import FastAPI,File, UploadFile
 from fastapi.middleware.cors  import CORSMiddleware
-from mushroom_learning.gcp    import get_model
 
 from tensorflow               import keras
 from tensorflow.keras         import utils
@@ -53,7 +52,7 @@ def check_size(mush: bytes = File(...)):
 
 #Api poison predict request
 @app.get("/poison")
-def create_file(mush: bytes = File(...)):
+def check_poison(mush: bytes = File(...)):
     # decode Base64 encoded bytes
     decoded_mush=base64.decodebytes(mush)
 
@@ -79,7 +78,7 @@ def create_file(mush: bytes = File(...)):
 
 #Api species request
 @app.get("/species")
-def create_file(mush: bytes = File(...)):
+def check_species(mush: bytes = File(...)):
     # decode Base64 encoded bytes
     decoded_mush=base64.decodebytes(mush)
 
