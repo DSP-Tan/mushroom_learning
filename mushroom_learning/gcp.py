@@ -13,8 +13,8 @@ env_path = find_dotenv() # automatic find
 load_dotenv(env_path)
 
 # PLEASE CHANGE WHEN CHANGING MODEL
-#LOCAL_STORAGE_PATH =  "/home/stella/code/DSP-Tan/mushroom_learning/our_first_model"
-LOCAL_STORAGE_PATH =  "../our_first_model"
+LOCAL_STORAGE_PATH =  "/home/stella/code/DSP-Tan/mushroom_learning/our_first_model"
+# LOCAL_STORAGE_PATH =  "../our_first_model"
 
 def save_to_gcp():
     """Uploads a file to the bucket."""
@@ -41,10 +41,6 @@ def load_from_gcp():
         return keras.models.load_model(LOCAL_STORAGE_PATH)
 
     print(os.environ['gcp_json_path'])
-    # print(os.getenv("gcp_json_path"))
-    # print("buckets: ")
-    # print(list(storage_client.list_buckets()))
-    # # print(BUCKET_NAME)
     bucket = storage_client.get_bucket(BUCKET_NAME)
     blobs = bucket.list_blobs(prefix=STORAGE_LOCATION)  # Get list of files
     for blob in blobs:
