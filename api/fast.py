@@ -1,21 +1,22 @@
+
 from fastapi import FastAPI,File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-# from git import Blob
-import joblib
-
-from numpy import bitwise_not
-import pandas as pd
-import cv2 #decoding with opencv
+from mushroom_learning.gcp import load_from_gcp
+from tensorflow.keras import utils
+import tensorflow as tf
+from tensorflow import keras
+import cv2 as cv
 import numpy as np
+
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Check root.
@@ -27,20 +28,25 @@ def index():
 @app.get("/predict")
 def create_file(file: bytes = File(...)):
     #The file is in bytes format. Convert byte to bits.
-    from_byte_to_bits = bytearray(file)
-    #Convert bits to array. You can use
-    from_bits_to_array = np.asarray(from_byte_to_bits, dtype="uint8")
-    #Decode the array to image. This will be used from the model.
-    decode_img = cv2.imdecode(from_bits_to_array,cv2.IMREAD_COLOR)
-    print(type(decode_img))
-    #Save the image. Just to check it
-    cv2.imwrite('output.png',decode_img)
+    # from_byte_to_bits = bytearray(file)
+    # # # # # #Convert bits to array.
+    # from_bits_to_array = np.asarray(from_byte_to_bits, dtype="uint8")
+    # # # # #Decode the array to image. This will be used from the model.
+    # decode_img = cv.imdecode(from_bits_to_array,cv.IMREAD_COLOR)
+    # # # # #Save the image. Just to check it
+    # cv.imwrite('output.png',decode_img)
 
-    # pipeline = get_model_from_gcp()
-    # pipeline = joblib.load('model.joblib')
+    model = load_from_gcp()
 
-    # # make prediction
-    # results = pipeline.predict(X)
-    # pred = str(results[0])
-
-    return decode_img.shape
+    # # # # # make prediction
+    img_height = 224
+    img_width = 224
+    decode_img_reshaped = tf.keras.utils.load_img('output.png', target_size=(img_height, img_width))
+    # # # decode_img_reshaped = cv.resize(decode_img, (img_height, img_width))
+    img_array = tf.keras.utils.img_to_array(decode_img_reshaped)
+    img_array_expand = tf.expand_dims(img_array, 0) # Create a batch
+    results = model.predict(img_array_expand)
+    class_names = ['edible', 'poisonous']
+    classif = int(results > .5)
+    output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
+    return output
