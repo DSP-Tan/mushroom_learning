@@ -53,7 +53,7 @@ def check_size(mush: bytes = File(...)):
 
 #Api predict request
 @app.get("/predict")
-    
+def create_file(mush: bytes = File(...)):
     # decode Base64 encoded bytes
     decoded_mush=base64.decodebytes(mush)
 
@@ -67,9 +67,12 @@ def check_size(mush: bytes = File(...)):
     print(f'\n\n---------------------------------------')
     print('Load model')
     print(f'-------------------------------------------\n\n')
-    #model=keras.models.load_model('our_first_model/')
+    model=get_model()
+    modle=model_species_vgg_v1
     print(f'-------------------------------------------\n\n')
-    
+    LOCAL_PATH_TO_MODEL='model_species_vgg_v1'
+    keras.models.load_model(LOCAL_PATH_TO_MODEL)
+    model=keras.models.load_model()
     #results = model.predict(im_API)
     #class_names = ['edible', 'poisonous']
     #classif = int(results > .5)
