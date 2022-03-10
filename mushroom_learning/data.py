@@ -81,7 +81,6 @@ def get_inputs_from_tfdataset(tfdataset, batched=False):
     return labels
 
 if __name__ == '__main__':
-    print("hey")
     data_dir = get_images_directory("../raw_data/mushrooms_species_train_test/train")
     data_dir_test = get_images_directory("../raw_data/mushrooms_species_train_test/test")
 

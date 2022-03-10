@@ -2,8 +2,12 @@ import sys
 from os.path import dirname, abspath, join
 sys.path.append(join(dirname(abspath(__file__)), ".."))
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+from dotenv import load_dotenv, find_dotenv
 from mushroom_learning.data import get_images_directory, load_validation_data, load_training_data, load_testing_data, get_labels_from_tfdataset, get_inputs_from_tfdataset, IMG_HEIGHT, IMG_WIDTH, BATCH_SIZE
-from mushroom_learning.gcp import save_model_to_gcp
+from mushroom_learning.gcp import save_model_to_gcp, get_model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import optimizers
 import tensorflow as tf
@@ -14,7 +18,10 @@ import matplotlib.pyplot as plt
 from tensorflow.keras.models import Sequential
 from tensorflow import keras
 
-LOCAL_PATH_TO_MODEL = "../model_species_vgg16_v1"
+# point to .env file
+env_path = join(dirname(abspath(__file__)),'.env') # ../.env
+# load your api key as environment variables
+load_dotenv(env_path)
 
 class Trainer(object):
     def __init__(self, train_ds, val_ds, test_ds, input_shape = (224, 224, 3)):
@@ -25,6 +32,7 @@ class Trainer(object):
         
         self.input_shape = input_shape
         self.num_classes = len(train_ds.class_names)
+        print("number of classes", self.num_classes)
     
         self.model = None
         self.history = None
@@ -34,8 +42,6 @@ class Trainer(object):
 
         return keras.Sequential(
         [
-            # layers.RandomFlip("horizontal",
-            #                 input_shape=self.input_shape),
             layers.RandomRotation(0.1),
             layers.RandomZoom(0.1),
         ]
@@ -108,14 +114,22 @@ class Trainer(object):
         self.fit_model()
     
     def evaluate(self): 
-        return self.model.evaluate(self.X_test, self.y_test)
+        self.model.evaluate(self.X_test, self.y_test)
     
     def plot_history(self):
         plt.plot(self.history.history['accuracy'])
         plt.plot(self.history.history['val_accuracy'])
         plt.show()
+        
+# CHANGE IF NEW MODEL        
+#LOCAL_PATH_TO_MODEL = "../model_1_species_vgg16"
+LOCAL_PATH_TO_MODEL = "../model_species_simple_0.815"
 
-if __name__ == "__main__": 
+
+if __name__ == "__main__":
+    save_model_to_gcp()
+    
+    
     
     # storage_location = "models/model_species_simple_0.815"
     # local_path_to_model = "../model_species_simple_0.815"
@@ -124,27 +138,34 @@ if __name__ == "__main__":
     # storage_location1 = "models/model_poison_simple_0.68"
     # local_path_to_model1 = "../model_poison_simple_0.68"
     # save_model_to_gcp(local_path_to_model1, storage_location1)
+
+    # -----------
     
-    # get data 
-    print("getting data")
-    data_dir = get_images_directory("../raw_data/mushrooms_species_train_test/train")
-    data_dir_test = get_images_directory("../raw_data/mushrooms_species_train_test/test")
+    # print("GETTING DATA")
+    # data_dir = get_images_directory("../raw_data/1_12_mushroom_species_train_test/train")
+    # data_dir_test = get_images_directory("../raw_data/1_12_mushroom_species_train_test/test")
     
-    print("loading data")
+    # print("LOADING DATA")
     
-    train_ds = load_training_data(data_dir)
-    val_ds = load_validation_data(data_dir)
-    test_ds = load_testing_data(data_dir_test)
+    # train_ds = load_training_data(data_dir)
+    # val_ds = load_validation_data(data_dir)
+    # test_ds = load_testing_data(data_dir_test)
     
-    print("training")
+    # print("TRAINING")
     
-    # Train and save model, locally and on gcp 
-    trainer = Trainer(train_ds, val_ds, test_ds)
-    trainer.run()
+    # # Train and save model, locally and on gcp 
+    # trainer = Trainer(train_ds, val_ds, test_ds)
+    # trainer.run()
     
-    print("saving model")
-    trainer.save_model()
-    print("saved")
+    # print("SAVING MODEL")
+    # trainer.save_model()
+    # print("SAVED")
+    
+    # print("EVALUATE MODEL")
+    # trainer.evaluate()
+    
+    # -------------
+    
     
     #load model from local storage 
     
