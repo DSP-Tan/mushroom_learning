@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "omega-clarity-337815",
+  "private_key_id": "ceef46377e83bca2181c568416b10f4ff6292463",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWXTx4HE7w23/z\nR00L7RvJlJjefEXRz6j8/ixoGSj0xbutT9HwTh1CZ8OZiJco1mkkUHdHCNMXvKGQ\n9fm8jIBES5cQGfRDsgvyYCktLkMBtVfLyLuma8SmD87ve79wM6gmTSNAMYCJdRE6\nfxtu4xLvicuFQ1OzOvVlLj0zM+iTd6O63DpYemHLpajbyvVWh7zvaJ4V1k1llFam\neQL1go/6RE2S+m8JZaxwpUjHnQJX4YO4fVcfYbVlcFEnelJxHC1JDusCkCT+SPrJ\n7mzr35HJAjb5Pkz5plQXZQ8ciB0gXTdbeQIUvgAUQmKrdMtFB90jezo2/pYKWHVq\nRPi1dth1AgMBAAECggEAMPB+tm8sSFuA3RsnWgrd4PHDAaL8DIpkq5dEt8r8mBJl\nf8a7g1XBUzQ3pxicble+1+lysQWPwymLgoV0t6gZNWFO9RgldwUTu1sN+90TRRKT\nVUnrvYJU+mGpzit+RxQhFfpET2ftOJAIP/xP3vr8VkeInMKpkuvNJBX1KF2sRJaL\nnKDFE0nPuP1TWZBt3IPzl+j2N99bR9abWxyXrtWPMS3/sYkzmp2BGRWozzbs8j3F\n4djbx4fytY7ZvSfegz1g0BZCRcp3jUCGjDpDwmc+78A5XmxDEMoZv+4dOh8oaFqS\n9skXdizVJB4trl8d33R6Tkyfe3OdIc/JghM5dTwEbwKBgQDQL6Ns6pvLuy/+HNsm\nQELQ98MxrCr8pMLBHh7rq+iPeLPgIJ0IK4HZ9ryzcTEb5aHbTKD4zJ1FZ5RzsRZp\nHdxv43bR+X6pbXxD7NsTM+KHX3TI1J2GNcVSeo5ev8czifyVPp09AxtNXWR6ZamX\nG5BVxv3zC2Bl7sllg0Hot4Cy2wKBgQC45fF/oM473+yzYd9/6cN4o8QxrEbzRTvO\n0dH+z6aE8mOMkQMeP0/DDyCT+6BpRg5gu/+iNKWHzX9pyoCNHBEknGkZ6rzFdPFq\n5wbz9g+E4GoQ7Mh1t7/T0fioVJZ+EiyUGkDi4ja1wFaXfUL1b05UhOrnN3yBIyab\nwKuKWtL67wKBgDNReuyPTIZFB0iRnmfocVAHsyMceKA8kRF/tkmL39D2BQkboPnx\nl5m+G7f0EBH7YhGn6wpJjf8c0FhQb+DLjpo6LQEHinSDW5121m3+XTnXivcyif4a\nZSC2uz+Z8KXAvvWfMK1ohaNlgS42vz5Tehna6qCtzj5yRUzztRyDl4L/AoGBAKk7\nTV7Tf++tdKh63GXnP9Ibkmckl4vxwlv6D4p55J+qexMdZw04RXjzT44isR+pz18a\ns09zgE5b+FKL1j1Rgx9PSaM/Bqhz8MM30VVZ0bp87JexIYkdNaZaeI0ZXuTlHYgw\nv1LqWcjg0mC1daPOzJLvVVFrp7lKwvurzVZE6vZhAoGAXHlfHAQtRT+/4AoZfPke\nsvlQV9g2dMI0OIkHnv89mygUwO/G7V8BM7P2T6x5jZ8lO+PYHQin8JzvBvME/Aj2\nPmNvxwjEGL3NGM2rSQe6k5d8mvyoc0XMXZME4f35KXr6nJf6RhbumFS9aJ0Bj0TK\nx9Od9n9vv7VUPFONXe4kksM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "lewagon@omega-clarity-337815.iam.gserviceaccount.com",
+  "client_id": "105855360165601570643",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/lewagon%40omega-clarity-337815.iam.gserviceaccount.com"
+}
