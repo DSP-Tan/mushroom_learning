@@ -6,9 +6,11 @@ import random
 import cv2        as cv
 import numpy      as np
 
-from fastapi                  import FastAPI,File, UploadFile
+from fastapi                  import FastAPI,File, UploadFile, Request
 from fastapi.middleware.cors  import CORSMiddleware
 
+import json
+from PIL import Image
 from tensorflow               import keras
 from tensorflow.keras         import utils
 
@@ -113,5 +115,34 @@ def bits_to_model(bits):
 
     return im_API
 
+@app.post("/image")
+async def process_image(request: Request):
+    
+    size=(224,224)
+    
+    request_body = await request.json()
 
+    image_b64_utf8 = request_body["image"]
 
+    img_bytes = base64.b64decode(image_b64_utf8.encode('utf8'))
+
+    # # convert bytes data to PIL Image object
+    img = Image.open(io.BytesIO(img_bytes))
+    print(img)
+    img_arr = np.asarray(img)
+    print(img_arr)
+
+    print('img shape', img_arr.shape)
+    img_rs=tf.image.resize(img_arr,size, method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
+    img_exp = tf.expand_dims(img_rs, 0)
+    print(img_rs)
+    print(img_exp)
+
+    model=keras.models.load_model('model_poison_vgg19_72/')
+    # Print the results.
+    results = model.predict(img_exp)
+    class_names = ['edible', 'poisonous']
+    classif = int(results > .5)
+    output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
+    return output
+    
