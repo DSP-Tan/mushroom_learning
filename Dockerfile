@@ -17,4 +17,4 @@ RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 
 
-CMD uvicorn api.fast:app --host 0.0.0.0 --port $PORT
+CMD uvicorn api.new_fast:app --host 0.0.0.0 --port $PORT
