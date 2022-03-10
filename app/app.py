@@ -33,7 +33,7 @@ label = 'Upload your Mushroom here'
 
 image = st.file_uploader(label, type=None, accept_multiple_files=False, key=None, help=None, on_change=None)
 
-preidction = 'Tricholoma scalpturatum'
+preidction = 'Amanita muscaria'
 
 size= 256,256
 if image:
@@ -54,7 +54,7 @@ if image:
             with predict_cols[1]:
 
                 st.header("Prediction:")
-                st.info("BIG MUSHROOM")
+                st.info(preidction)
                 st.metric(label="accuracy",value='76%')
 
 
