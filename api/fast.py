@@ -117,7 +117,8 @@ def bits_to_model(bits):
 
 @app.post("/image")
 async def process_image(request: Request):
-    
+    print(request)
+    print(type(request))
     size=(224,224)
     
     request_body = await request.json()
