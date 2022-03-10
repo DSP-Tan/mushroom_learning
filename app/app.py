@@ -33,7 +33,8 @@ label = 'Upload your Mushroom here'
 
 image = st.file_uploader(label, type=None, accept_multiple_files=False, key=None, help=None, on_change=None)
 
-preidction = 'Tricholoma scalpturatum'
+prediction = 'Tricholoma scalpturatum'
+
 
 size= 256,256
 if image:
@@ -60,7 +61,7 @@ if image:
 
             with predict_cols[2]:
                 st.header("Wiki Image")
-                st.image(get_wiki_image(preidction))
+                st.image(get_wiki_image(prediction))
 
             expander_cols = st.columns(3)
 
@@ -71,18 +72,18 @@ if image:
                 else:
 
                     expander_info = expander_cols[0].expander("Cap Shape:")
-                    im3= Image.open(pic_to_dict(Wiki_Api(preidction)["capShape"]))
+                    im3= Image.open(pic_to_dict(Wiki_Api(prediction)["capShape"]))
                     im3.thumbnail(size)
                     expander_info.image(im3)
 
                     expander_hydro = expander_cols[1].expander("Hymenium Shape:")
-                    im4= Image.open(pic_to_dict(Wiki_Api(preidction)["whichGills"]))
+                    im4= Image.open(pic_to_dict(Wiki_Api(prediction)["whichGills"]))
                     im4.thumbnail(size)
                     expander_hydro.image(im4)
 
 
                     expander_ed = expander_cols[2].expander("Edible:")
-                    im5= Image.open(pic_to_dict(Wiki_Api(preidction)["howEdible"]))
+                    im5= Image.open(pic_to_dict(Wiki_Api(prediction)["howEdible"]))
                     im5.thumbnail(size)
                     expander_ed.image(im5)
 
