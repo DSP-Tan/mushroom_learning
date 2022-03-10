@@ -1,0 +1,22 @@
+# packaging
+pip>=9
+setuptools>=26
+twine
+wheel>=0.29
+
+# data science
+numpy
+tensorflow
+
+# API
+uvicorn
+fastapi
+python-multipart
+opencv-python
+
+# utilities
+six>=1.14
+termcolor
+pathlib
+
+

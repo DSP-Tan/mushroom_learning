@@ -1,10 +1,13 @@
+import os
+import io
 import tensorflow as tf
+import base64
+import random
 import cv2        as cv
 import numpy      as np
 
 from fastapi                  import FastAPI,File, UploadFile
 from fastapi.middleware.cors  import CORSMiddleware
-from mushroom_learning.gcp    import get_model
 
 from tensorflow               import keras
 from tensorflow.keras         import utils
@@ -29,31 +32,68 @@ def index():
 
 
 # Check file size in Kbytes
-@app.get("/size")
-async def create_file(mush: bytes = File(...)):
+@app.post("/size")
+def check_size(mush: bytes = File(...)):
+    #Check type of image as it arrives.
+    print(
+         f'''
+         --------------------------------------------------------------\n
+         --------------------------------------------------------------\n
+         \n\n\nAfter being passed to API, file has tpye: {type(mush)}\n
+         The file has length {len(mush)}
+         '''
+         )
     # convert to bytes with bytearray, and to np array
-    image = np.asarray(bytearray(mush), dtype="uint8")
+    #image = np.asarray(bytearray(mush), dtype="uint8")
+    decoded_mush=base64.decodebytes(mush)
 
-    return f'This file is {len(image)/1000} Kbytes'
+    return f'This file is {len(decoded_mush)/1000} Kbytes and type {type(decoded_mush)}'
 
 
+#Api poison predict request
+@app.get("/poison")
+def check_poison(mush: bytes = File(...)):
+    # decode Base64 encoded bytes
+    decoded_mush=base64.decodebytes(mush)
 
-#Api predict request
-@app.get("/predict")
-def create_file(mush: bytes = File(...)):
-
-    with open(mush, 'rb') as f:
-        im_API = f.read()
-    im_API=bits_to_model(im_API)
-
-    model = get_model()
+    # preprocess for image to be in form required by model
+    im_API=bits_to_model(decoded_mush)
+    
+    # Confirm we have the correct type here.
+    im_type=type(im_API); shape=im_API.shape; descrip='Tensorflow expanded image'
+    print(f'{descrip:26} {str(im_type):56} {str(shape):30}')
+    
+    # Load the model.
+    print(f'\n\n---------------------------------------')
+    print('Load model')
+    print(f'-------------------------------------------\n\n')
+    model=keras.models.load_model('our_first_model/')
+    
+    # Print the results.
     results = model.predict(im_API)
     class_names = ['edible', 'poisonous']
     classif = int(results > .5)
     output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
     return output
 
+#Api species request
+@app.get("/species")
+def check_species(mush: bytes = File(...)):
+    # decode Base64 encoded bytes
+    decoded_mush=base64.decodebytes(mush)
 
+    # preprocess for image to be in form required by model
+    im_API=bits_to_model(decoded_mush)
+    
+    # Temporary stop gap.
+    probability=99.9999999999
+    names={'amanita_muscaria', 'amanita_virosa', 'boletus_edulis', 'cantharellus_cibarius', 'russula_mairei', 'trametes_versicolor'}
+    name = random.choice(tuple(names))
+    # random item from set
+    print(name)
+    # Output 65
+
+    return (name,probability)
 
 # Take image from bits to model-ready
 def bits_to_model(bits):
@@ -75,3 +115,6 @@ def bits_to_model(bits):
     im_API = tf.expand_dims(im_API, 0)
 
     return im_API
+
+
+

@@ -3,7 +3,7 @@ FROM python:3.8.12-buster
 COPY api /api
 COPY mushroom_learning /mushroom_learning
 COPY our_first_model /our_first_model
-COPY smaller_docker_requirements.txt /requirements.txt
+COPY min_docker_requirements.txt /requirements.txt
 
 #RUN pip3 install pathlib==1.0.1
 RUN pip install -r requirements.txt
