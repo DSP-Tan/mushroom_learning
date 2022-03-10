@@ -1,31 +1,142 @@
 import requests
 import os
+import numpy as np
+import base64
+import json
 
-URL_base    ='https://mushroom-docker-lpuaioudtq-ew.a.run.app'
-URL_base    ='http://0.0.0.0:8000/'
+# Hosted URLs and endpoints.
+URL_hosted        = 'https://mushroom-docker-lpuaioudtq-ew.a.run.app/'
+URL_hosted_size   = URL_hosted + 'size/'
+URL_hosted_poison = URL_hosted + 'poison/'
+URL_hosted_species= URL_hosted + 'species/'
+URL_hosted_image  = URL_hosted + 'image/'
 
+# Local URLs and endpoints.
+URL_base    = 'http://0.0.0.0:8000/'
+URL_size    = URL_base+"size/"
+URL_poison  = URL_base+"poison/"
+URL_species = URL_base+"species/"
+URL_image   = URL_base+"image/"
 
-URL_size    = URL_base+'size/'
-URL_predict = URL_base+'predict/'
+# Set up image.
+with open('amanita.jpg', 'rb') as f:
+    im_API = f.read()
+im_API=np.asarray(bytearray(im_API), dtype="uint8")
+encoded = base64.b64encode(im_API)
 
+print("--------------------------------------------------")
+print("----------------Query local docker----------------")
+print("--------------------------------------------------")
 
-mush_path='FS2013PIC82005485.JPG'
-mush_path='APE2017-9186528_HyZ-iZy6vg.JPG'
+# Set up image Jerome's way.
 
-print('Response from base URL:')
+print("--------------------------------------------------")
+image_path='amanita.jpg'
+with open(image_path, "rb") as f:
+    im_bytes = f.read()
+im_b64 = base64.b64encode(im_bytes).decode("utf8")
+
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+
+payload = json.dumps({"image": im_b64})
+print(type(payload))
+#print(payload)
+response = requests.post(URL_image, data=payload, headers=headers)
+
+print(response.json())
+print("---------------------------------------------------")
+
+files={'mush':encoded}
+
+print('\n\n')
+# Get response from local base.
+print('Response from base local  URL:')
 response = requests.get(URL_base)
-print(response.json())
-
-image_path=os.path.join(os.getcwd(),mush_path)
-#with open(image_path,"wb") as f:
-#    f.write(image.getbuffer())
-
-files = {'mush': mush_path  }
-
-print('Response from size URL:')
-response = requests.get(URL_size,data=files)
-print(response.json())
-
-print('Response from predict URL:')
-response=requests.get(URL_predict,data=files)
 print(response)
+print( response.json() )
+print('\n\n')
+
+# Get response from local size
+print('Response from local size endpoint')
+response = requests.post(URL_size,data=files)
+print(response)
+print(response.json())
+print('\n\n')
+
+# Get response from local poison
+print('Response from local poison  endpoint')
+response = requests.post(URL_poison,data=files)
+print(response)
+print(response.json())
+print('\n\n')
+
+
+# Get response from species
+print('Response from local species endpoint')
+response = requests.post(URL_species,data=files)
+print(response)
+print(response.json())
+print('\n\n')
+
+####################################################
+####################################################
+
+print("--------------------------------------------------")
+print("----------------Query hosted docker---------------")
+print("--------------------------------------------------")
+
+
+print('\n\n')
+# Get response from hosted base.
+print('Response from hosted base  URL:')
+response = requests.get(URL_hosted)
+print(response)
+print( response.json() )
+print('\n\n')
+
+# Get response from hosted size
+print('Response from hosted size endpoint')
+response = requests.post(URL_hosted_size,data=files)
+print(response)
+print(response.json())
+print('\n\n')
+
+# Get response from hosted poison
+print('Response from hosted poison  endpoint')
+response = requests.post(URL_hosted_poison,data=files)
+print(response)
+print(response.json())
+print('\n\n')
+
+
+# Get response from hosted species
+print('Response from hosted species endpoint')
+response = requests.post(URL_hosted_species,data=files)
+print(response)
+print(response.json())
+print('\n\n')
+
+
+
+
+
+
+# Get response from hosted image
+print("--------------------------------------------------")
+print('Response from hosted image  URL:')
+image_path='amanita.jpg'
+with open(image_path, "rb") as f:
+    im_bytes = f.read()
+im_b64 = base64.b64encode(im_bytes).decode("utf8")
+
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+
+payload = json.dumps({"image": im_b64})
+print('Response from image endpoint')
+print(type(payload))
+#print(payload)
+response = requests.post(URL_hosted_image, data=payload, headers=headers)
+print(response)
+print(response.json())
+print("---------------------------------------------------")
+
