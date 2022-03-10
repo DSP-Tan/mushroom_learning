@@ -55,7 +55,7 @@ if image:
 
                 st.header("Prediction:")
                 st.info(preidction)
-                st.metric(label="accuracy",value='76%')
+                st.metric(label="Certainty",value='66%')
 
 
             with predict_cols[2]:
@@ -88,7 +88,11 @@ if image:
 
 
                     expander_interesting = st.expander('interesing info')
-                    expander_interesting.write('Some weird fact ')
+                    expander_interesting.write('''A. muscaria was used by both shamans and laypeople alike, and was used recreationally as well as religiously. In eastern Siberia,
+                                               the shaman would take the mushrooms, and others would drink his urine. This urine, still containing psychoactive elements,
+                                               may be more potent than the A. muscaria mushrooms with fewer
+                                               negative effects such as sweating and twitching, suggesting that the initial user may act as a screening
+                                               filter for other components in the mushroom.''')
             except:
                 pass
 
