@@ -18,5 +18,6 @@ opencv-python
 six>=1.14
 termcolor
 pathlib
+Pillow
 
 

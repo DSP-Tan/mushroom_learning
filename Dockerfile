@@ -4,6 +4,7 @@ COPY api /api
 COPY mushroom_learning /mushroom_learning
 COPY our_first_model /our_first_model
 COPY min_docker_requirements.txt /requirements.txt
+COPY model_poison_vgg19_72 /model_poison_vgg19_72
 
 #RUN pip3 install pathlib==1.0.1
 RUN pip install -r requirements.txt
