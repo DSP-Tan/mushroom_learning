@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import requests
 import os
 import random
+from PIL import Image
 from mushroom_learning.utils import Wiki_Api, get_wiki_image, pic_to_dict
+
 
 
 st.set_page_config(
@@ -16,24 +18,6 @@ st.set_page_config(
 
 st.markdown("<h1 style='text-align: center; color: black;'>Mushroom Magic 🍄</h1>", unsafe_allow_html=True)
 
-m = st.markdown("""
-<style>
-div.stButton > button:first-child {
-    box-shadow: 3px 4px 0px 0px #899599;
-	background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
-	background-color:#ededed;
-	border-radius:15px;
-	border:1px solid #d6bcd6;
-	display:inline-block;
-	cursor:pointer;
-	color:#3a8a9e;
-	font-family:Arial;
-	font-size:18px;
-	padding:7px 25px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #e1e2ed;
-}
-</style>""", unsafe_allow_html=True)
 
 spinner_quotes = ['“All Fungi are edible. Some fungi are only edible once.” ― Terry Pratchett',
                   '“Nature alone is antique, and the oldest art a mushroom.” ~ Thomas Carlyle',
@@ -49,19 +33,65 @@ label = 'Upload your Mushroom here'
 
 image = st.file_uploader(label, type=None, accept_multiple_files=False, key=None, help=None, on_change=None)
 
-col1, col2, col3 = st.columns(3)
+preidction = 'Tricholoma scalpturatum'
 
-with col1:
-    st.header("Cape Shape")
-    st.image(pic_to_dict(Wiki_Api('Amanita virosa')["capShape"]),width =200)
+size= 256,256
+if image:
+    cols = st.columns(3)
+    if cols[1].button('Identify your Mushroom'):
+        random_num = random.randint(0,len(spinner_quotes)-1)
+        with st.spinner(spinner_quotes[random_num]):
+            predict_cols = st.columns(3)
 
-with col2:
-    st.header("Hymenium")
-    st.image(pic_to_dict(Wiki_Api('Amanita virosa')["whichGills"]),width =200)
+            with predict_cols[0]:
+                st.header("Upload")
 
-with col3:
-    st.header("Edible")
-    st.image(pic_to_dict(Wiki_Api('Amanita virosa')["howEdible"]),width =200)
+                im= Image.open(image)
+                im.thumbnail(size)
+                st.image(im)
+
+
+            with predict_cols[1]:
+
+                st.header("Prediction:")
+                st.info("BIG MUSHROOM")
+                st.metric(label="accuracy",value='76%')
+
+
+            with predict_cols[2]:
+                st.header("Wiki Image")
+                st.image(get_wiki_image(preidction))
+
+            expander_cols = st.columns(3)
+
+            try:
+                if not Wiki_Api(preidction)["capShape"]:
+                    pass
+
+                else:
+
+                    expander_info = expander_cols[0].expander("Cap Shape:")
+                    im3= Image.open(pic_to_dict(Wiki_Api(preidction)["capShape"]))
+                    im3.thumbnail(size)
+                    expander_info.image(im3)
+
+                    expander_hydro = expander_cols[1].expander("Hymenium Shape:")
+                    im4= Image.open(pic_to_dict(Wiki_Api(preidction)["whichGills"]))
+                    im4.thumbnail(size)
+                    expander_hydro.image(im4)
+
+
+                    expander_ed = expander_cols[2].expander("Edible:")
+                    im5= Image.open(pic_to_dict(Wiki_Api(preidction)["howEdible"]))
+                    im5.thumbnail(size)
+                    expander_ed.image(im5)
+
+
+                    expander_interesting = st.expander('interesing info')
+                    expander_interesting.write('Some weird fact ')
+            except:
+                pass
+
 
 
 
@@ -69,37 +99,8 @@ with col3:
 URL_size = 'http://127.0.0.1:8000/size'
 URL_predict = 'http://127.0.0.1:8000/predict'
 
-
-
-spinner_quotes = ['“All Fungi are edible. Some fungi are only edible once.” ― Polish/Croatian proverb',
-                  '“Nature alone is antique, and the oldest art a mushroom.” ~ Thomas Carlyle',
-                  'A meal without mushrooms is like a day without rain. - John Cage',
-                  'Advice is like mushrooms. The wrong kind can prove fatal. - Charles E. McKenzie',
-                  'It\'s interesting, isn\'t it? . . . the chandelier . . . it reminds me of mushroom soup. — Tennessee Williams'
-                  'Why did the mushroom go to the party? Because he\'s a fungi! — Louis Tomlinson',
-                  'Look around when you have got your first mushroom or made your first discovery: they grow in clusters. — George Polya',
-                  'From dead plant matter to nematodes to bacteria, never underestimate the cleverness of mushrooms to find new food! — Paul Stamets',
-                  'Compliments are like mushrooms, the most beautiful are the most poisonous. - Italian proverb',
-                  "One who is noisy in the wood, scares away mushrooms. - Russian proverb"
-                  ]
-# Lot's of nice proverbs here: https://quoteproverbs.com/mushrooms/
-# On googling the first quote is not actually by Terry prachett but is a proverb.
-
 random_num = random.randint(0,len(spinner_quotes)-1)
 
-
-if image:
-    cols = st.columns(2)
-    if col1.button('Identify your Mushroom'):
-        with st.spinner(spinner_quotes[random_num]):
-
-            with col1:
-                st.header("Wiki Image")
-                st.image(get_wiki_image('Amanita virosa'),width=200)
-
-            with col2:
-                st.header("Upload")
-                st.image(image,width=200)
 
 
 

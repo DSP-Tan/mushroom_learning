@@ -1,6 +1,7 @@
 import wikipedia
 import requests
 import json
+from PIL import Image
 
 WIKI_REQUEST = 'http://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles='
 
@@ -38,16 +39,17 @@ def Wiki_Api(mushroom_name):
     #Find key for Json
   key = list(response['query']['pages'].keys())[0]
   lines = response['query']['pages'][key]['revisions'][0]['*'].split('\n')
-
+  cap_counter  =0
   for line in lines:
     if 'howEdible' in line:
-      mushroom_dict["howEdible"] = line.split('=')[1].strip(" ")
+        mushroom_dict["howEdible"] = line.split('=')[1].strip(" ").strip("}")
     # if 'howEdible2' in line:
     #   mushroom_dict["howEdible2"] = line.split('=')[1].strip(" ")
     if 'whichGills' in line:
       mushroom_dict["whichGills"] = line.split('=')[1].strip(" ")
-    if 'capShape' in line:
-       mushroom_dict["capShape"] = line.split('=')[1].strip(" ")
+    if 'capShape' in line and cap_counter==0:
+      mushroom_dict["capShape"] = line.split('=')[1].strip(" ")
+      cap_counter += 1
     # if 'hymeniumType' in line:
     #   mushroom_dict["hymeniumType"] = line.split('=')[1].strip(" ")
     # if 'stipeCharacter' in line:
@@ -63,4 +65,11 @@ def Wiki_Api(mushroom_name):
 def pic_to_dict(dic_item):
   folder_loc = "Wiki_images" #where we will retrieve the files from
   root_folder = "/Users/burty/code/DSP-Tan/mushroom_learning/app/"
-  return f"{root_folder}/{folder_loc}/{dic_item}.jpeg"
+  full_loc = f"{root_folder}/{folder_loc}/{dic_item}.jpeg"
+  im = Image.open(full_loc)
+  size = 126,126
+  im.thumbnail(size)
+  return full_loc
+
+def convert_name(name):
+    return name.replace('_'," ").capitalize()
