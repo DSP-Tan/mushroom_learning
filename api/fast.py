@@ -51,7 +51,7 @@ def check_size(mush: bytes = File(...)):
 
 
 #Api poison predict request
-@app.get("/poison")
+@app.post("/poison")
 def check_poison(mush: bytes = File(...)):
     # decode Base64 encoded bytes
     decoded_mush=base64.decodebytes(mush)
@@ -64,10 +64,7 @@ def check_poison(mush: bytes = File(...)):
     print(f'{descrip:26} {str(im_type):56} {str(shape):30}')
     
     # Load the model.
-    print(f'\n\n---------------------------------------')
-    print('Load model')
-    print(f'-------------------------------------------\n\n')
-    model=keras.models.load_model('our_first_model/')
+    model=keras.models.load_model('model_poison_vgg19_72/')
     
     # Print the results.
     results = model.predict(im_API)
@@ -77,7 +74,7 @@ def check_poison(mush: bytes = File(...)):
     return output
 
 #Api species request
-@app.get("/species")
+@app.post("/species")
 def check_species(mush: bytes = File(...)):
     # decode Base64 encoded bytes
     decoded_mush=base64.decodebytes(mush)
