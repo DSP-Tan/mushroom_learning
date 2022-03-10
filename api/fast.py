@@ -51,7 +51,7 @@ def check_size(mush: bytes = File(...)):
 
 
 #Api poison predict request
-@app.get("/poison")
+@app.post("/poison")
 def check_poison(mush: bytes = File(...)):
     # decode Base64 encoded bytes
     decoded_mush=base64.decodebytes(mush)
@@ -77,7 +77,7 @@ def check_poison(mush: bytes = File(...)):
     return output
 
 #Api species request
-@app.get("/species")
+@app.post("/species")
 def check_species(mush: bytes = File(...)):
     # decode Base64 encoded bytes
     decoded_mush=base64.decodebytes(mush)
