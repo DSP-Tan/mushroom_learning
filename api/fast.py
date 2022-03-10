@@ -32,7 +32,7 @@ def index():
 
 
 # Check file size in Kbytes
-@app.get("/size")
+@app.post("/size")
 def check_size(mush: bytes = File(...)):
     #Check type of image as it arrives.
     print(
