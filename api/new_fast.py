@@ -54,22 +54,18 @@ def check_size(mush: bytes = File(...)):
 
 #Api poison predict request
 @app.post("/poison")
-def check_poison(mush: bytes = File(...)):
-    # decode Base64 encoded bytes
-    decoded_mush=base64.decodebytes(mush)
+async def check_poison(request: Request):
+    request_body = await request.json()
+    image_b64_utf8 = request_body["image"]
+    img_exp = new_preproc(image_b64_utf8)
+    
 
-    # preprocess for image to be in form required by model
-    im_API=bits_to_model(decoded_mush)
-    
-    # Confirm we have the correct type here.
-    im_type=type(im_API); shape=im_API.shape; descrip='Tensorflow expanded image'
-    print(f'{descrip:26} {str(im_type):56} {str(shape):30}')
-    
     # Load the model.
     model=keras.models.load_model('model_poison_vgg19_72/')
-    
+    # Predict.
+    results = model.predict(img_exp)
     # Print the results.
-    results = model.predict(im_API)
+
     class_names = ['edible', 'poisonous']
     classif = int(results > .5)
     output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
@@ -77,12 +73,11 @@ def check_poison(mush: bytes = File(...)):
 
 #Api species request
 @app.post("/species")
-def check_species(mush: bytes = File(...)):
-    # decode Base64 encoded bytes
-    decoded_mush=base64.decodebytes(mush)
-
-    # preprocess for image to be in form required by model
-    im_API=bits_to_model(decoded_mush)
+async def check_species(request: Request):
+    
+    request_body = await request.json()
+    image_b64_utf8 = request_body["image"]
+    img_exp = new_preproc(image_b64_utf8)
     
     # Temporary stop gap.
     probability=99.9999999999
@@ -93,6 +88,36 @@ def check_species(mush: bytes = File(...)):
     # Output 65
 
     return (name,probability)
+
+@app.post("/image")
+async def process_image(request: Request):
+    request_body = await request.json()
+    image_b64_utf8 = request_body["image"]
+    img_exp = new_preproc(image_b64_utf8)
+
+    model=keras.models.load_model('model_poison_vgg19_72/')
+    
+    # Print the results.
+    results = model.predict(img_exp)
+    class_names = ['edible', 'poisonous']
+    classif = int(results > .5)
+    output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
+    return output
+    
+
+def new_preproc(image_b64_utf8):
+    size=(224,224)
+    
+    img_bytes = base64.b64decode(image_b64_utf8.encode('utf8'))
+
+    # # convert bytes data to PIL Image object
+    img = Image.open(io.BytesIO(img_bytes))
+    img_arr = np.asarray(img)
+
+    img_rs=tf.image.resize(img_arr,size, method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
+    img_exp = tf.expand_dims(img_rs, 0)
+    return img_exp
+
 
 # Take image from bits to model-ready
 def bits_to_model(bits):
@@ -114,36 +139,3 @@ def bits_to_model(bits):
     im_API = tf.expand_dims(im_API, 0)
 
     return im_API
-
-@app.post("/image")
-async def process_image(request: Request):
-    print(request)
-    print(type(request))
-    size=(224,224)
-    
-    request_body = await request.json()
-
-    image_b64_utf8 = request_body["image"]
-
-    img_bytes = base64.b64decode(image_b64_utf8.encode('utf8'))
-
-    # # convert bytes data to PIL Image object
-    img = Image.open(io.BytesIO(img_bytes))
-    print(img)
-    img_arr = np.asarray(img)
-    print(img_arr)
-
-    print('img shape', img_arr.shape)
-    img_rs=tf.image.resize(img_arr,size, method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
-    img_exp = tf.expand_dims(img_rs, 0)
-    print(img_rs)
-    print(img_exp)
-
-    model=keras.models.load_model('model_poison_vgg19_72/')
-    # Print the results.
-    results = model.predict(img_exp)
-    class_names = ['edible', 'poisonous']
-    classif = int(results > .5)
-    output = f"This mushroom is most likely {class_names[classif]}. Score: {results[0][0]:.2f}"
-    return output
-    

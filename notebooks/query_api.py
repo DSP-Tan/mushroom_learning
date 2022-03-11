@@ -1,3 +1,4 @@
+from requests.structures import CaseInsensitiveDict
 import requests
 import os
 import numpy as np
@@ -19,7 +20,7 @@ URL_species = URL_base+"species/"
 URL_image   = URL_base+"image/"
 
 # Set up image.
-with open('amanita.jpg', 'rb') as f:
+with open('fart.jpg', 'rb') as f:
     im_API = f.read()
 im_API=np.asarray(bytearray(im_API), dtype="uint8")
 encoded = base64.b64encode(im_API)
@@ -31,7 +32,7 @@ print("--------------------------------------------------")
 # Set up image Jerome's way.
 
 print("--------------------------------------------------")
-image_path='amanita.jpg'
+image_path='fart.jpg'
 with open(image_path, "rb") as f:
     im_bytes = f.read()
 im_b64 = base64.b64encode(im_bytes).decode("utf8")
@@ -111,7 +112,23 @@ print('\n\n')
 
 # Get response from hosted species
 print('Response from hosted species endpoint')
-response = requests.post(URL_hosted_species,data=files)
+
+# Necessary preprocessing
+headers = CaseInsensitiveDict()
+headers["accept"] = "application/json"
+headers["Content-Type"] = "application/x-www-form-urlencoded"
+
+image_path='fart.jpg'
+with open(image_path, "rb") as f:
+    im_bytes = f.read()
+im_b64 = base64.b64encode(im_bytes).decode("utf8")
+
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+payload = json.dumps({"image": im_b64})
+print(type(payload))
+url = "https://mushroom-docker-lpuaioudtq-ew.a.run.app/species"
+
+response = requests.post(url,headers=headers,data=payload)
 print(response)
 print(response.json())
 print('\n\n')
@@ -122,20 +139,51 @@ print('\n\n')
 
 
 # Get response from hosted image
+
+
+#headers = CaseInsensitiveDict()
+#headers["accept"] = "application/json"
+#headers["Content-Type"] = "application/x-www-form-urlencoded"
+
 print("--------------------------------------------------")
 print('Response from hosted image  URL:')
 image_path='amanita.jpg'
 with open(image_path, "rb") as f:
     im_bytes = f.read()
 im_b64 = base64.b64encode(im_bytes).decode("utf8")
-
+print(type(im_b64))
+url = "https://mushroom-docker-lpuaioudtq-ew.a.run.app/image"
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-
 payload = json.dumps({"image": im_b64})
 print('Response from image endpoint')
 print(type(payload))
 #print(payload)
-response = requests.post(URL_hosted_image, data=payload, headers=headers)
+print(URL_hosted_image)
+response = requests.post(url, headers=headers,data=payload)
+print(response)
+print(response.json())
+print("---------------------------------------------------")
+
+
+
+
+
+
+
+
+
+
+print("--------------------------------------------------")
+print('Response from hosted image  URL:')
+image_path='fart.jpg'
+with open(image_path, "rb") as f:
+    im_bytes = f.read()
+im_b64 = base64.b64encode(im_bytes).decode("utf8")
+
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+payload = json.dumps({"image": im_b64})
+
+response = requests.post(url, headers=headers,data=payload)
 print(response)
 print(response.json())
 print("---------------------------------------------------")
