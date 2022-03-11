@@ -63,7 +63,7 @@ if image:
                 st.image(get_wiki_image(preidction))
 
             expander_cols = st.columns(3)
-
+            st.write(Wiki_Api(preidction)["capShape"])
             try:
                 if not Wiki_Api(preidction)["capShape"]:
                     pass
