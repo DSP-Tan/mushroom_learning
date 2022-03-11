@@ -7,7 +7,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 from dotenv import load_dotenv, find_dotenv
 from mushroom_learning.data import get_images_directory, load_validation_data, load_training_data, load_testing_data, get_labels_from_tfdataset, get_inputs_from_tfdataset, IMG_HEIGHT, IMG_WIDTH, BATCH_SIZE
-from mushroom_learning.gcp import save_model_to_gcp, get_model
+from mushroom_learning.gcp import save_model_to_gcp, get_model, LOCAL_PATH_TO_MODEL
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import optimizers
 import tensorflow as tf
@@ -123,46 +123,30 @@ class Trainer(object):
         
 # CHANGE IF NEW MODEL        
 #LOCAL_PATH_TO_MODEL = "../model_1_species_vgg16"
-LOCAL_PATH_TO_MODEL = "../model_species_simple_0.815"
+#LOCAL_PATH_TO_MODEL = "../model_3_species_vgg16"
 
 
 if __name__ == "__main__":
-    save_model_to_gcp()
     
+    print("GETTING DATA")
+    data_dir = get_images_directory("../raw_data/2_12_mushroom_species_train_test/train")
+    data_dir_test = get_images_directory("../raw_data/2_12_mushroom_species_train_test/test")
     
+    print("LOADING DATA")
     
-    # storage_location = "models/model_species_simple_0.815"
-    # local_path_to_model = "../model_species_simple_0.815"
-    # save_model_to_gcp(local_path_to_model, storage_location)
+    train_ds = load_training_data(data_dir)
+    val_ds = load_validation_data(data_dir)
+    test_ds = load_testing_data(data_dir_test)
     
-    # storage_location1 = "models/model_poison_simple_0.68"
-    # local_path_to_model1 = "../model_poison_simple_0.68"
-    # save_model_to_gcp(local_path_to_model1, storage_location1)
-
-    # -----------
+    print("TRAINING")
     
-    # print("GETTING DATA")
-    # data_dir = get_images_directory("../raw_data/1_12_mushroom_species_train_test/train")
-    # data_dir_test = get_images_directory("../raw_data/1_12_mushroom_species_train_test/test")
+    # Train and save model, locally and on gcp 
+    trainer = Trainer(train_ds, val_ds, test_ds)
+    trainer.run()
     
-    # print("LOADING DATA")
-    
-    # train_ds = load_training_data(data_dir)
-    # val_ds = load_validation_data(data_dir)
-    # test_ds = load_testing_data(data_dir_test)
-    
-    # print("TRAINING")
-    
-    # # Train and save model, locally and on gcp 
-    # trainer = Trainer(train_ds, val_ds, test_ds)
-    # trainer.run()
-    
-    # print("SAVING MODEL")
-    # trainer.save_model()
-    # print("SAVED")
-    
-    # print("EVALUATE MODEL")
-    # trainer.evaluate()
+    print("SAVING MODEL")
+    trainer.save_model()
+    print("SAVED")
     
     # -------------
     

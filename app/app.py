@@ -33,7 +33,7 @@ label = 'Upload your Mushroom here'
 
 image = st.file_uploader(label, type=None, accept_multiple_files=False, key=None, help=None, on_change=None)
 
-preidction = 'Tricholoma scalpturatum'
+preidction = 'Amanita muscaria'
 
 size= 256,256
 if image:
@@ -63,7 +63,7 @@ if image:
                 st.image(get_wiki_image(preidction))
 
             expander_cols = st.columns(3)
-
+            st.write(Wiki_Api(preidction)["capShape"])
             try:
                 if not Wiki_Api(preidction)["capShape"]:
                     pass
