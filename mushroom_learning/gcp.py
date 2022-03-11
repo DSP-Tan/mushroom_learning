@@ -67,5 +67,5 @@ def load_model_from_gcp():
 
 if __name__ == '__main__':
     #save_model_to_gcp()
-    model = load_model_from_gcp()
-    print(type(model))
+    # model = load_model_from_gcp()
+    # print(type(model))

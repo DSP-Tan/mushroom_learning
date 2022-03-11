@@ -86,5 +86,3 @@ if __name__ == '__main__':
     train_ds = load_training_data(data_dir)
     val_ds = load_validation_data(data_dir)
     test_ds = load_testing_data(data_dir_test)
-    
-

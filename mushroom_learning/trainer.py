@@ -53,8 +53,7 @@ class Trainer(object):
     def set_nontrainable_layers(self):
         self.model.trainable = False
         return self.model
-        
-    
+
     def add_last_layers(self):
         '''Take a pre-trained model, set its parameters as non-trainables, and add additional trainable layers on top'''
         initializer = tf.keras.initializers.GlorotUniform(seed=0)
@@ -120,53 +119,31 @@ class Trainer(object):
         plt.plot(self.history.history['accuracy'])
         plt.plot(self.history.history['val_accuracy'])
         plt.show()
-        
-# CHANGE IF NEW MODEL        
-#LOCAL_PATH_TO_MODEL = "../model_1_species_vgg16"
-#LOCAL_PATH_TO_MODEL = "../model_3_species_vgg16"
-
 
 if __name__ == "__main__":
     
-    print("GETTING DATA")
-    data_dir = get_images_directory("../raw_data/2_12_mushroom_species_train_test/train")
-    data_dir_test = get_images_directory("../raw_data/2_12_mushroom_species_train_test/test")
+    # print("GETTING DATA")
+    # data_dir = get_images_directory("../raw_data/2_12_mushroom_species_train_test/train")
+    # data_dir_test = get_images_directory("../raw_data/2_12_mushroom_species_train_test/test")
     
-    print("LOADING DATA")
+    # print("LOADING DATA")
     
-    train_ds = load_training_data(data_dir)
-    val_ds = load_validation_data(data_dir)
-    test_ds = load_testing_data(data_dir_test)
+    # train_ds = load_training_data(data_dir)
+    # val_ds = load_validation_data(data_dir)
+    # test_ds = load_testing_data(data_dir_test)
     
-    print("TRAINING")
+    # print("TRAINING")
     
-    # Train and save model, locally and on gcp 
-    trainer = Trainer(train_ds, val_ds, test_ds)
-    trainer.run()
+    # # Train and save model, locally and on gcp 
+    # trainer = Trainer(train_ds, val_ds, test_ds)
+    # trainer.run()
     
-    print("SAVING MODEL")
-    trainer.save_model()
-    print("SAVED")
+    # print("SAVING MODEL")
+    # trainer.save_model()
+    # print("SAVED")
     
     # -------------
-    
-    
-    #load model from local storage 
-    
-    # EVALUATION 
-    
-    #accuracy = trainer.evaluate()
-    #print("evaluating")
-   # print(accuracy)
-    #trainer.history.history['val_acc']
-    
-#    val_ds = load_validation_data()
-#    print(type(val_ds))
-#    trainer = Trainer(train=train_ds, val=val_ds)
 
-#    save_to_gcp()
-    # model = load_from_gcp()
-   
     # img_height = 224
     # img_width = 224
     # class_names = ['edable', 'poison']
@@ -183,6 +160,3 @@ if __name__ == "__main__":
     # classif = int(prediction > .5)
     # print(classif)
     # print(f"This image most likely belongs to {class_names[classif]} with a score of: {prediction[0][0]:.2f}")
-
-    
-
