@@ -9,8 +9,8 @@ import json
 URL_hosted        = 'https://mushroom-docker-lpuaioudtq-ew.a.run.app/'
 URL_hosted_size   = URL_hosted + 'size/'
 URL_hosted_poison = URL_hosted + 'poison/'
-URL_hosted_species= URL_hosted + 'species/'
-URL_hosted_image  = URL_hosted + 'image/'
+URL_hosted_species= URL_hosted + 'species'
+URL_hosted_image  = URL_hosted + 'image'
 
 # Local URLs and endpoints.
 URL_base    = 'http://0.0.0.0:8000/'
@@ -146,20 +146,28 @@ print('\n\n')
 #headers["Content-Type"] = "application/x-www-form-urlencoded"
 
 print("--------------------------------------------------")
+
+headers = CaseInsensitiveDict()
+headers["accept"] = "application/json"
+headers["Content-Type"] = "application/x-www-form-urlencoded"
+
 print('Response from hosted image  URL:')
+
+
 image_path='amanita.jpg'
 with open(image_path, "rb") as f:
     im_bytes = f.read()
 im_b64 = base64.b64encode(im_bytes).decode("utf8")
-print(type(im_b64))
+
+
 url = "https://mushroom-docker-lpuaioudtq-ew.a.run.app/image"
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 payload = json.dumps({"image": im_b64})
-print('Response from image endpoint')
-print(type(payload))
-#print(payload)
+
 print(URL_hosted_image)
-response = requests.post(url, headers=headers,data=payload)
+print(url)
+
+response = requests.post(URL_hosted_image, headers=headers,data=payload)
 print(response)
 print(response.json())
 print("---------------------------------------------------")
@@ -175,15 +183,17 @@ print("---------------------------------------------------")
 
 print("--------------------------------------------------")
 print('Response from hosted image  URL:')
+
 image_path='fart.jpg'
 with open(image_path, "rb") as f:
     im_bytes = f.read()
 im_b64 = base64.b64encode(im_bytes).decode("utf8")
-
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-payload = json.dumps({"image": im_b64})
 
+payload = json.dumps({"image": im_b64})
+print(URL_hosted_image)
 response = requests.post(url, headers=headers,data=payload)
+
 print(response)
 print(response.json())
 print("---------------------------------------------------")

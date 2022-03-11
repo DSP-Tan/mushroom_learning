@@ -7,8 +7,8 @@ import json
 
 # Hosted URLs and endpoints.
 URL_hosted        = 'https://mushroom-docker-lpuaioudtq-ew.a.run.app/'
-URL_hosted_size   = URL_hosted + 'size/'
-URL_hosted_poison = URL_hosted + 'poison/'
+URL_hosted_size   = URL_hosted + 'size'
+URL_hosted_poison = URL_hosted + 'poison'
 URL_hosted_species= URL_hosted + 'species'
 URL_hosted_image  = URL_hosted + 'image'
 
@@ -86,6 +86,13 @@ print("--------------------------------------------------")
 print("----------------Query hosted docker---------------")
 print("--------------------------------------------------")
 
+image_path='amanita.jpg'
+with open(image_path, "rb") as f:
+    im_bytes = f.read()
+im_b64 = base64.b64encode(im_bytes).decode("utf8")
+payload = json.dumps({"image": im_b64})
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+
 
 print('\n\n')
 # Get response from hosted base.
@@ -95,16 +102,20 @@ print(response)
 print( response.json() )
 print('\n\n')
 
+
 # Get response from hosted size
 print('Response from hosted size endpoint')
-response = requests.post(URL_hosted_size,data=files)
+
+
+response = requests.post(URL_hosted_size, headers=headers,data=payload)
 print(response)
 print(response.json())
 print('\n\n')
 
 # Get response from hosted poison
 print('Response from hosted poison  endpoint')
-response = requests.post(URL_hosted_poison,data=files)
+response = requests.post(URL_hosted_poison, headers=headers,data=payload)
+#response = requests.post(URL_hosted_poison,data=files)
 print(response)
 print(response.json())
 print('\n\n')
@@ -141,15 +152,8 @@ print('\n\n')
 # Get response from hosted image
 
 
-#headers = CaseInsensitiveDict()
-#headers["accept"] = "application/json"
-#headers["Content-Type"] = "application/x-www-form-urlencoded"
 
 print("--------------------------------------------------")
-
-headers = CaseInsensitiveDict()
-headers["accept"] = "application/json"
-headers["Content-Type"] = "application/x-www-form-urlencoded"
 
 print('Response from hosted image  URL:')
 
@@ -188,9 +192,10 @@ image_path='fart.jpg'
 with open(image_path, "rb") as f:
     im_bytes = f.read()
 im_b64 = base64.b64encode(im_bytes).decode("utf8")
+payload = json.dumps({"image": im_b64})
+
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
-payload = json.dumps({"image": im_b64})
 print(URL_hosted_image)
 response = requests.post(url, headers=headers,data=payload)
 
