@@ -11,11 +11,7 @@ from tensorflow import keras
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from mushroom_learning.params import BUCKET_NAME, BUCKET_TRAIN_DATA_PATH
 
-# point to .env file
-env_path = join(dirname(abspath(__file__)),'.env') # ../.env
-env_path = find_dotenv() # automatic find 
-
-# load your api key as environment variables
+env_path = join(dirname(abspath(__file__)),'.env')
 load_dotenv(env_path)
 
 IMG_HEIGHT = 224
@@ -64,24 +60,23 @@ def load_testing_data(data_dir):
 
 def get_labels_from_tfdataset(tfdataset, batched=False):
 
-    labels = list(map(lambda x: x[1], tfdataset)) # Get labels 
+    labels = list(map(lambda x: x[1], tfdataset)) 
 
     if not batched:
-        return tf.concat(labels, axis=0) # concat the list of batched labels
+        return tf.concat(labels, axis=0) 
 
     return labels
 
 def get_inputs_from_tfdataset(tfdataset, batched=False):
 
-    labels = list(map(lambda x: x[0], tfdataset)) # Get labels 
+    labels = list(map(lambda x: x[0], tfdataset)) 
 
     if not batched:
-        return tf.concat(labels, axis=0) # concat the list of batched labels
+        return tf.concat(labels, axis=0) 
 
     return labels
 
 if __name__ == '__main__':
-    print("hey")
     data_dir = get_images_directory("../raw_data/mushrooms_species_train_test/train")
     data_dir_test = get_images_directory("../raw_data/mushrooms_species_train_test/test")
 

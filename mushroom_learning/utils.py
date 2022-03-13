@@ -20,9 +20,7 @@ def get_wiki_image(search_term):
     except:
         return 0
 
-
 def Wiki_Api(mushroom_name):
-
   mushroom_dict = {}
 
   params={
@@ -32,7 +30,6 @@ def Wiki_Api(mushroom_name):
     'prop':'revisions',
     'rvsection':0,
     'rvprop':'content'}
-
     #Inital response from Wiki web page
   response=requests.get(url,params).json()
 
