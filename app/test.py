@@ -10,6 +10,7 @@ import json
 import random
 from PIL import Image
 from mushroom_learning.utils import Wiki_Api, get_wiki_image, pic_to_dict
+#from app.app_utils import get_max_mush, query species
 
 #To do: move this to utils.
 def get_max_mush(dict_res,other=True, weights=[1,1,1]):
@@ -40,25 +41,25 @@ def get_max_mush(dict_res,other=True, weights=[1,1,1]):
 
 
 # store results in a list of dicts.
-    def query_species(payload,base_url):
-        results=[]
-        maxes=[]
-        for i in [1, 2, 3]:
-            url=base_url+str(i)
-            predict=requests.post(url , headers = headers , data = payload).json()
-            # Prediction is output as str, eval returns it to dict.
-            result=eval(predict)
-            max_mush=get_max_mush(result)
-            maxes.append(max_mush)
-            print(f"\n\nThe out put of model {i} is :\n{result}\nThe most likely mushroom is :\n{max_mush}")
-            results.append(result)
-        
-        maxes_dict={i[0]:i[1] for i in maxes}
-        print(f"\n\nHere are the maxes in dictionary form\n{maxes_dict}")
-        
-        ultimate_mush=get_max_mush(maxes_dict,other=False)
-        print(f"The final chosen mushroom is:\n{ultimate_mush}")
-        return ultimate_mush
+def query_species(payload,base_url):
+    results=[]
+    maxes=[]
+    for i in [1, 2, 3]:
+        url=base_url+str(i)
+        predict=requests.post(url , headers = headers , data = payload).json()
+        # Prediction is output as str, eval returns it to dict.
+        result=eval(predict)
+        max_mush=get_max_mush(result)
+        maxes.append(max_mush)
+        print(f"\n\nThe out put of model {i} is :\n{result}\nThe most likely mushroom is :\n{max_mush}")
+        results.append(result)
+    
+    maxes_dict={i[0]:i[1] for i in maxes}
+    print(f"\n\nHere are the maxes in dictionary form\n{maxes_dict}")
+    
+    ultimate_mush=get_max_mush(maxes_dict,other=False)
+    print(f"The final chosen mushroom is:\n{ultimate_mush}")
+    return ultimate_mush
 
 
 
