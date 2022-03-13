@@ -50,7 +50,24 @@ headers = {'Content-type': 'application/json' , 'Accept' : 'text/plain'}
 payload = json.dumps({"image" : image})
 
 
-def get_max_mush(dict_res):
+
+def get_max_mush(dict_res,other=True, weights=[1,1,1]):
+    '''
+    This will return the dicionary item of the species
+    with the highest score. If other is set to True this
+    includes the 'Other' species, if it is set to false
+    the other is not included.
+
+    The weights have to be set to the accuracy/or some metric
+    of each model, so that later on you do not take as the maximum
+    score a high score from a bad model.
+
+    The weights only come into play after you first find the maximum,
+    so the implementation is not as straight forward as it seems. You
+    could just have an option where the weights are only applied when
+    a certain flag is given. Anyway, for now we do not have the weights
+    and so we will continue without them but with this reminder.
+    '''
     max_prob=0
     for key, value in dict_res.items():
         if key=='Other':
@@ -60,35 +77,31 @@ def get_max_mush(dict_res):
             max_prob=value
     return max_res
 
+# To DO: These three species calls need to be done using 1 function.
+# There is bad repitition here. Or just a for loop, for i in 1,2,3
+# results.append(results)
 
-# Call species 1
-url = "https://mushroom-docker-lpuaioudtq-ew.a.run.app/species1"
-predict1 = requests.post(url , headers = headers , data = payload).json()
-# This is a dictionary but we had to output as a string, so use eval
-# to make it a dictionary again.
-result1=eval(predict1)
-# Get max
-max_res1=get_max_mush(result1)
+# store results in a list of dicts.
+results=[]
+maxes=[]
+for i in [1, 2, 3]:
+    url="https://mushroom-docker-lpuaioudtq-ew.a.run.app/species"+str(i)
+    predict=requests.post(url , headers = headers , data = payload).json()
+    # Prediction is output as str, eval returns it to dict.
+    result=eval(predict)
+    max_mush=get_max_mush(result)
+    maxes.append(max_mush)
+    print(f"\n\nThe out put of model {i} is :\n{result}\nThe most likely mushroom is :\n{max_mush}")
+    results.append(result)
 
+maxes_dict={i[0]:i[1] for i in maxes}
+print(f"\n\nHere are the maxes in dictionary form\n{maxes_dict}")
 
-# Call species 2
-url = "https://mushroom-docker-lpuaioudtq-ew.a.run.app/species2"
-predict2 = requests.post(url , headers = headers , data = payload).json()
-result2  = eval(predict2)
-max_res2=get_max_mush(result2)
+ultimate_mush=get_max_mush(maxes_dict,other=False)
+print(f"The final chosen mushroom is:\n{ultimate_mush}")
 
-print(type(result2))
-
-# Call species 3
-url = "https://mushroom-docker-lpuaioudtq-ew.a.run.app/species3"
-predict3 = requests.post(url , headers = headers , data = payload).json()
-result3  = eval(predict3)
-max_res3=get_max_mush(result3)
-
-ultimate_mush=get_max_mush({max_res1[0]:max_res1[1], max_res2[0]:max_res2[1], max_res3[0]:max_res3[1]})
-print(ultimate_mush)
-
-preidction = 'Amanita muscaria'
+preidction = ultimate_mush[0]
+certainty  = ultimate_mush[1]
 
 #size= 256,256
 #if image:
@@ -110,7 +123,7 @@ preidction = 'Amanita muscaria'
 #
 #                st.header("Prediction:")
 #                st.info(preidction)
-#                st.metric(label="Certainty",value='66%')
+#                st.metric(label="Certainty",value=f'{100*round(certainty,)}%')
 #
 #
 #            with predict_cols[2]:
