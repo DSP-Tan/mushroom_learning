@@ -11,6 +11,9 @@ URL_base    = 'http://0.0.0.0:8000/'
 URL_size    = URL_base+"size/"
 URL_poison  = URL_base+"poison"
 URL_species = URL_base+"species"
+URL_species1 = URL_base+"species1"
+URL_species2 = URL_base+"species2"
+URL_species3 = URL_base+"species3"
 URL_image   = URL_base+"image"
 
 print("--------------------------------------------------")
@@ -74,6 +77,30 @@ response = requests.post(URL_species, headers=headers,data=payload)
 print(response)
 print(response.json())
 print('\n\n')
+
+# Get response from species1
+print('Response from local species1 endpoint')
+response = requests.post(URL_species1, headers=headers,data=payload)
+print(response)
+print(response.json())
+print('\n\n')
+
+# Get response from species2
+print('Response from local species2 endpoint')
+response = requests.post(URL_species2, headers=headers,data=payload)
+print(response)
+print(response.json())
+print('\n\n')
+
+# Get response from species3
+print('Response from local species3 endpoint')
+response = requests.post(URL_species3, headers=headers,data=payload)
+print(response)
+print(response.json())
+print('\n\n')
+
+
+
 
 ####################################################
 ####################################################
