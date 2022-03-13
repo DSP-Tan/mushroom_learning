@@ -33,7 +33,7 @@ split-folders
 streamlit
 watchdog
 requests
-json
+json-encoder
 wikipedia
 
 
