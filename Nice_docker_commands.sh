@@ -71,7 +71,7 @@ docker run -e PORT=8000 -p 8000:8000 eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
 sudo docker push eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME
 
 # Deploy on google cloud
-gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform managed --region europe-west1 --memory 4Gi
+gcloud run deploy --image eu.gcr.io/$PROJECT_ID/$DOCKER_IMAGE_NAME --platform managed --region europe-west1 --memory 8Gi
 
 
 
