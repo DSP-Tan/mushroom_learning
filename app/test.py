@@ -39,6 +39,29 @@ def get_max_mush(dict_res,other=True, weights=[1,1,1]):
     return max_res
 
 
+# store results in a list of dicts.
+    def query_species(payload,base_url):
+        results=[]
+        maxes=[]
+        for i in [1, 2, 3]:
+            url=base_url+str(i)
+            predict=requests.post(url , headers = headers , data = payload).json()
+            # Prediction is output as str, eval returns it to dict.
+            result=eval(predict)
+            max_mush=get_max_mush(result)
+            maxes.append(max_mush)
+            print(f"\n\nThe out put of model {i} is :\n{result}\nThe most likely mushroom is :\n{max_mush}")
+            results.append(result)
+        
+        maxes_dict={i[0]:i[1] for i in maxes}
+        print(f"\n\nHere are the maxes in dictionary form\n{maxes_dict}")
+        
+        ultimate_mush=get_max_mush(maxes_dict,other=False)
+        print(f"The final chosen mushroom is:\n{ultimate_mush}")
+        return ultimate_mush
+
+
+
 st.set_page_config(
         page_title="Mushroom Magic", # => Quick reference - Streamlit
         page_icon="🍄",
@@ -68,6 +91,9 @@ if(image):
 
     img_path="temp.jpg"
     im_PIL.save(img_path)
+    #im_PIL.save("../"+img_path)
+    # Temporary work around to ensure streamlit runs correctly whether it is run in
+    # The app folder or in the mushroom learning base.
 
     # Set up image Jerome's way.
     with open(img_path, "rb") as f:
@@ -76,32 +102,19 @@ if(image):
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     payload = json.dumps({"image": im_b64})
 
-    # store results in a list of dicts.
-    results=[]
-    maxes=[]
-    for i in [1, 2, 3]:
-        url="https://mushroom-docker-lpuaioudtq-ew.a.run.app/species"+str(i)
-        predict=requests.post(url , headers = headers , data = payload).json()
-        # Prediction is output as str, eval returns it to dict.
-        result=eval(predict)
-        max_mush=get_max_mush(result)
-        maxes.append(max_mush)
-        print(f"\n\nThe out put of model {i} is :\n{result}\nThe most likely mushroom is :\n{max_mush}")
-        results.append(result)
-    
-    maxes_dict={i[0]:i[1] for i in maxes}
-    print(f"\n\nHere are the maxes in dictionary form\n{maxes_dict}")
-    
-    ultimate_mush=get_max_mush(maxes_dict,other=False)
-    print(f"The final chosen mushroom is:\n{ultimate_mush}")
-    
-    preidction = ultimate_mush[0]
-    certainty  = ultimate_mush[1]
-   
+        
+       
 
     size= 256,256
     cols = st.columns(3)
     if cols[1].button('Identify your Mushroom'):
+        
+        # Run prediction.
+        url="https://mushroom-docker-lpuaioudtq-ew.a.run.app/species"
+        ultimate_mush= query_species(payload,url)
+        preidction = ultimate_mush[0]
+        certainty  = ultimate_mush[1]
+
         random_num = random.randint(0,len(spinner_quotes)-1)
         with st.spinner(spinner_quotes[random_num]):
             predict_cols = st.columns(3)
