@@ -9,7 +9,7 @@ import base64
 import json
 import random
 from PIL import Image
-from mushroom_learning.utils import Wiki_Api, get_wiki_image, pic_to_dict
+from mushroom_learning.utils import Wiki_Api, get_wiki_image, pic_to_dict, convert_name
 #from app.app_utils import get_max_mush, query species
 
 #To do: move this to utils.
@@ -113,7 +113,7 @@ if(image):
         # Run prediction.
         url="https://mushroom-docker-lpuaioudtq-ew.a.run.app/species"
         ultimate_mush= query_species(payload,url)
-        preidction = ultimate_mush[0]
+        preidction = convert_name(ultimate_mush[0])
         certainty  = ultimate_mush[1]
 
         random_num = random.randint(0,len(spinner_quotes)-1)
