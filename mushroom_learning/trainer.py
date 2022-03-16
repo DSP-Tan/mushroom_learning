@@ -120,7 +120,7 @@ class Trainer(object):
         plt.plot(self.history.history['val_accuracy'])
         plt.show()
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     
     # print("GETTING DATA")
     # data_dir = get_images_directory("../raw_data/2_12_mushroom_species_train_test/train")
@@ -143,6 +143,8 @@ if __name__ == "__main__":
     # print("SAVED")
     
     # -------------
+    
+    ## PREDICTIONS
 
     # img_height = 224
     # img_width = 224
