@@ -22,8 +22,6 @@ STORAGE_LOCATION_GCU = f"models/{MODEL_NAME}"
 
 def save_model_to_gcp():
     """Uploads a folder (!) to the bucket."""
-    # model = get_model()
-    # tf.saved_model.save(model, "test_folder")
     storage_client = storage.Client.from_service_account_json(os.getenv("gcp_json_path"))
     
     rel_paths = glob.glob(LOCAL_PATH_TO_MODEL  + '/**', recursive=True)
@@ -66,6 +64,6 @@ def load_model_from_gcp():
     return get_model()
 
 if __name__ == '__main__':
-    #save_model_to_gcp()
-    # model = load_model_from_gcp()
-    # print(type(model))
+    save_model_to_gcp()
+    model = load_model_from_gcp()
+    print(type(model))
