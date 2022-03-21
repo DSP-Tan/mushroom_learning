@@ -122,15 +122,15 @@ class Trainer(object):
 
 if __name__ == "__main__":
     
-    # print("GETTING DATA")
-    # data_dir = get_images_directory("../raw_data/2_12_mushroom_species_train_test/train")
-    # data_dir_test = get_images_directory("../raw_data/2_12_mushroom_species_train_test/test")
+    print("GETTING DATA")
+    data_dir = get_images_directory("../raw_data/2_12_mushroom_species_train_test/train")
+    data_dir_test = get_images_directory("../raw_data/2_12_mushroom_species_train_test/test")
     
-    # print("LOADING DATA")
+    print("LOADING DATA")
     
-    # train_ds = load_training_data(data_dir)
-    # val_ds = load_validation_data(data_dir)
-    # test_ds = load_testing_data(data_dir_test)
+    train_ds = load_training_data(data_dir)
+    val_ds = load_validation_data(data_dir)
+    test_ds = load_testing_data(data_dir_test)
     
     # print("TRAINING")
     
@@ -143,6 +143,8 @@ if __name__ == "__main__":
     # print("SAVED")
     
     # -------------
+    
+    ## PREDICTIONS
 
     # img_height = 224
     # img_width = 224
