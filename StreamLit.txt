@@ -1,5 +1,0 @@
-To be able to run streamlit on this virtual machine, we need to 
-forward to the port 5000 which we have set up for our external
-ip address.
-
-streamlit run app/app.py --server.port=5000
