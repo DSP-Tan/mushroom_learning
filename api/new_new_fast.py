@@ -199,8 +199,8 @@ def bits_to_model(bits):
 
     # decode byte array back into image, and then adjust
     # for cv's automatic BGR representation
-    im_API = cv.imdecode(im_API,cv.IMREAD_COLOR)
-    im_API = cv.cvtColor(im_API , cv.COLOR_BGR2RGB)
+    im_API = cv.imdecode(im_API, cv.IMREAD_COLOR)
+    im_API = cv.cvtColor(im_API, cv.COLOR_BGR2RGB)
 
     # resize using tensor flow with nearest neighbour interpolation
     im_API=tf.image.resize(im_API,size, method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
