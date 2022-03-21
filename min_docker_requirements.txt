@@ -16,7 +16,6 @@ opencv-python
 
 # utilities
 six>=1.14
-termcolor
 pathlib
 Pillow
 
