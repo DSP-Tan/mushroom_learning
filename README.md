@@ -205,6 +205,17 @@ There is 994.25, and you can notice that the number of photos of each genus are 
 Exidia, Incocybe, and Pluteus genuses not present. Perhaps this is not 
 in northerm europe.
 
+| Genus  | #photos |
+| ------------- | ------------- |
+| Agaricus      |  353          | 
+| Amanita       |  750          | 
+| Boletus       |  1073         | 
+| Cortinarius   |  836          | 
+| Entoloma      |  364          | 
+| Hygrocybe     |  316          | 
+| Lactarius     |  1563         | 
+| Russula       |  1148         | 
+| Suillius      |  311          | 
 
 family       # ph<br/>
 Agaricus     353<br/>
