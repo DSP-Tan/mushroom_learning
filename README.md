@@ -1,11 +1,27 @@
-# Data analysis
+# Mushroom Learning
 
-- Document here the project: mushroom_learning
-- Description: Project Description
-- Data Source:
-- Type of analysis:
+Mushroom learning is a repository containing a project aimed at the 
+specification of mushrooms. It contains two types of convolutional neural 
+network models: the first is one trained on a data set of various mushrooms
+labelled as either poisonous or edible, and will estimate the poisonousness or
+edibility of a mushroom based on it's appearance; the second type of model, of
+which there are currently 4, detects the species of a mushroom by it's appearance.
+In it's current incarnation, the application can identify 36 mushroom species.
 
-Please document the project the better you can.
+Up to this point, the data have mainly been obtained from the kaggle competition data
+set, described below, merged with the other species datasets also described below.
+
+The trained models are in the api with base url:
+https://mushroom-docker-lpuaioudtq-ew.a.run.app/
+
+To see how to query this, see the file "new_remote_query.py" located
+in the api folder of this repository. There are 4 end points: poison, which
+predicts the poisonousness or edibility; species1, which will tell you if the
+image you posted is one of a given 12 mushrooms, or other; species2 which will
+tell you if your mushroom is one of a different 12 mushrooms, or other; and species3,
+which will tell you if the mushroom is one of another gorup of 12.
+
+
 
 # Startup the project
 
@@ -130,48 +146,12 @@ There are no other labels on the photos so we would have to take this guys word 
 
 ###
 
-### MUST_AI - Mushroom Classification Dataset
-https://www.kaggle.com/mustai/mushroom-12-9528
-
-This is a gigantic data set of (2GB), with 9528 mushroom images, these are broken into
-train test and valid directories. These directories are then broken into specific family
-directories.
-
-We want species names, not family names. We can maybe further categorise within these folders
-to get to the species names. 
-
-The images are however clearly ordered by species type within these folders, so it would not be 
-difficult to reapply the species labels.
-
-The images were scraped from http://www.mushroom.world.
-
-This could be a good starting model to narrow a mushroom down to it's family type, and then use
-further models to narrow it down to species.
-
-family       # phots<br/>
-Agaricus     681<br/>
-Amanita      523<br/>
-Boletus      751<br/>
-Cortinarius  585<br/>
-Entoloma     587<br/>
-Exidia       304<br/>
-Hygrocybe    520<br/>
-Inocybe      432<br/>
-Lactarius    760<br/>
-Pluteus      308<br/>
-Russula      751<br/>
-Suillius     462<br/>
-
-
-In the code section of this dataset there are examples a model trained to identify
-the different families. Ther people who made this don't seem to know the difference
-between a species and a genus.
 
 ### Saurabh Shahane - Mushroom Object Detection Dataset
 https://www.kaggle.com/saurabhshahane/mushroom-object-detection-dataset
 
 
-Tiny (8.42) data set with pictures of just chanterelles and chicken of the woods. The images are
+Tiny (8.42 MB) data set with pictures of just chanterelles and chicken of the woods. The images are
 labelled as chicken of the woods or chanterelle. There are 247 in the training folder, 6 in the test
 folder, and 6 in the validation folder. It seems there were a small
 number of original images here which have been proliferated already. Or multiplied or whatever
@@ -192,6 +172,32 @@ This can be analysed later to see the mushrooms per species etc.
 It has folders broken into "Detection" and "Classification", so this could be
 interesting.
 
+
+### MUST_AI - Mushroom Classification Dataset
+https://www.kaggle.com/mustai/mushroom-12-9528
+
+This is a gigantic data set of (2GB), with 9528 mushroom images, these are broken into
+train test and valid directories. These directories are then broken into specific family
+directories.
+
+We want species names, not family names. We can maybe further categorise within these folders
+to get to the species names. 
+
+The images are however clearly ordered by species type within these folders, so it would not be 
+difficult to reapply the species labels.
+
+The images were scraped from http://www.mushroom.world.
+
+This could be a good starting model to narrow a mushroom down to it's family type, and then use
+further models to narrow it down to species.
+
+In the code section of this dataset there are examples a model trained to identify
+the different families. Ther people who made this don't seem to know the difference
+between a species and a genus.
+
+See below CatDogo dataset description for a count of the number of photos per genus
+in this dataset. 
+
 ### CatDogo - Mushrooms classification - Common genus's images
 https://www.kaggle.com/maysee/mushrooms-classification-common-genuss-images
 
@@ -205,28 +211,20 @@ There is 994.25, and you can notice that the number of photos of each genus are 
 Exidia, Incocybe, and Pluteus genuses not present. Perhaps this is not 
 in northerm europe.
 
-| Genus  | #photos |
-| ------------- | ------------- |
-| Agaricus      |  353          | 
-| Amanita       |  750          | 
-| Boletus       |  1073         | 
-| Cortinarius   |  836          | 
-| Entoloma      |  364          | 
-| Hygrocybe     |  316          | 
-| Lactarius     |  1563         | 
-| Russula       |  1148         | 
-| Suillius      |  311          | 
-
-family       # ph<br/>
-Agaricus     353<br/>
-Amanita      750<br/>
-Boletus      1073<br/>
-Cortinarius  836<br/>
-Entoloma     364<br/>
-Hygrocybe    316<br/>
-Lactarius    1563<br/>
-Russula      1148<br/>
-Suillius     311<br/>
+| Genus         | #phot CatDogo | #phot MUST_AI |
+| ------------- | ------------- | ------------- |
+| Agaricus      |  353          | 681           | 
+| Amanita       |  750          | 523           |
+| Boletus       |  1073         | 751           |
+| Cortinarius   |  836          | 585           |
+| Entoloma      |  364          | 587           |
+| Exidia        |  0            | 304           |
+| Hygrocybe     |  316          | 520           |
+| Incocybe      |  0            | 432           |
+| Lactarius     |  1563         | 760           |
+| Pluteus       |  0            | 308           |
+| Russula       |  1148         | 751           |
+| Suillius      |  311          | 462           |
 
 
 ## Good options for datasets with species names:
