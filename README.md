@@ -181,6 +181,9 @@ Here is a sample of the species sorted in order of most photographs:
 
 
 Here is the output of the pandas.describe() method applied to the number of photos:
+| count | mean | std | min | 25% | 50% | 75% | max |
+| ----- | ---- | --- | --- | --- | --- | --- | --- |
+| 1394  | 64   | 60  | 6   | 22  | 46  | 88  | 442 |
 
 | measure                   | value         |
 | ------------------------- | ------------- |
