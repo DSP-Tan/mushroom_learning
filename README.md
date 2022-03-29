@@ -156,20 +156,20 @@ Here is a sample of the species sorted in order of most photographs:
 | Species                   | #phot         |
 | ------------------------- | ------------- |
 | Plicatura crispa          |	 442        |
-| Pluteus cervinus	    |    419        |
+| Pluteus cervinus	        |    419        |
 | Tricholoma scalpturatum   |    414        |
 | Xerocomellus chrysenteron |    406        |
 | Mycena galericulata	    |    375        |
 | Byssomerulius corium	    |    374        |
 | Cylindrobasidium laeve    |    364        |
-| Armillaria lutea	    |    352        |
+| Armillaria lutea	        |    352        |
 | Ganoderma pfeifferi	    |    342        |
 | Coprinellus micaceus	    |    340        |
 | Fomitopsis pinicola	    |    329        |
 | Trametes versicolor	    |    313        |
-| Fomes fomentarius	    |    308        |
+| Fomes fomentarius	        |    308        |
 | Psathyrella candolleana   |    298        |
-| Xylodon paradoxus	    |    291        |
+| Xylodon paradoxus	        |    291        |
 | ...                       |    ...        |
 | Hydnum_albidum            |      6        |
 | Clitocybe_alexandri       |      6        |
@@ -185,16 +185,6 @@ Here is the output of the pandas.describe() method applied to the number of phot
 | ----- | ---- | --- | --- | --- | --- | --- | --- |
 | 1394  | 64   | 60  | 6   | 22  | 46  | 88  | 442 |
 
-| measure                   | value         |
-| ------------------------- | ------------- |
-|count	                    | 1394.000000   |
-|mean	                    | 64.390244     |
-|std	                    | 60.252196     |
-|min	                    | 6.000000      |
-|25%	                    | 22.000000     |
-|50%	                    | 46.000000     |
-|75%	                    | 88.000000     |
-|max	                    | 442.000000    |
 
 This data set has 275 species with 100 pictures, but the majority of the species in this data set
 have less than this amount, with the median number of pictures being 46. However, not all of these
