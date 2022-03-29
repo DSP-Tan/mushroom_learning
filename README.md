@@ -178,16 +178,19 @@ Here is a sample of the species sorted in order of most photographs:
 | Physalacria_cryptomeriae  |      6        |
 | Ramaria_formosa           |      6        |
 
+
+
 Here is the output of the pandas.describe() method applied to the number of photos:
+
 | ------------------------- | ------------- |
-count	                    | 1394.000000   |
-mean	                    | 64.390244     |
-std	                    | 60.252196     |
-min	                    | 6.000000      |
-25%	                    | 22.000000     |
-50%	                    | 46.000000     |
-75%	                    | 88.000000     |
-max	                    | 442.000000    |
+|count	                    | 1394.000000   |
+|mean	                    | 64.390244     |
+|std	                    | 60.252196     |
+|min	                    | 6.000000      |
+|25%	                    | 22.000000     |
+|50%	                    | 46.000000     |
+|75%	                    | 88.000000     |
+|max	                    | 442.000000    |
 
 This data set has 275 species with 100 pictures, but the majority of the species in this data set
 have less than this amount, with the median number of pictures being 46. However, not all of these
