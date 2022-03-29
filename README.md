@@ -91,6 +91,8 @@ mushroom_learning-run
 ```
 
 # Data set descriptions
+These data sets were largely obtained by searching kaggle for the different keywords "mushroom", "mushrooms", "fungus" and "fungi".
+Some were found through google searches or blog posts, and where this is the case it is specified.
 
 ## csv data files:
 
@@ -101,9 +103,11 @@ https://www.kaggle.com/dhinaharp/mushroom-dataset
 https://www.kaggle.com/uciml/mushroom-classification
 
 
-## Picture datasets:
+## Species Labelled Picture datasets:
+These are datasets where the pictures are labelled by species, which is
+necessary for any mushroom species detection application.
 
-### David_Harper_species_pictures
+### David Harper species pictures
 https://www.kaggle.com/harperd17/mushroom-pictures
 
 same data converted to jpeg:
@@ -128,6 +132,7 @@ amanita bisporigera, also known as the destroying angel, is tied with death cap 
 mushroom.
 
 boletus edulus is a "cèpe" or "steinpilz" or "penny bun", and a prized edible.
+
 cantharellus is the chanterelle, a prized edible mushroom. Cantharellus is a genus name; what David Harper has here is
 the species cantharellus cibarius.
 
@@ -135,17 +140,60 @@ omphalotus, also known as jack-o-lantern, is poisonous, glows in the dark, and o
 
 russula mariae is an edible but unpleasant mushroom. Not of much interest.
 
-### Stepan Dupilak - predict poison mushrooom by photo
-https://www.kaggle.com/stepandupliak/predict-poison-mushroom-by-photo
+### Kaggle competition dataset.
+https://www.kaggle.com/c/fungi-challenge-fgvc-2018/data
 
-A large (2GB) collection of photos of mushrooms in two folders classified as either poisonous or edible.
-There are no other labels on the photos so we would have to take this guys word for it.
+It's here:
+https://github.com/visipedia/fgvcx_fungi_comp#data
 
-6937 edible mushroom photos.
-4766 poisonous mushroom photos.
+This is a large 13 GB data set of mushroom pictures, with 1394 different labellled
+mushroom speices.
 
-###
+See description here:
+https://towardsdatascience.com/computer-vision-lets-classify-mushrooms-6b3abe1561eb
 
+Here is a sample of the species sorted in order of most photographs:
+| Species                   | #phot         |
+| ------------------------- | ------------- |
+| Plicatura crispa          |	 442        |
+| Pluteus cervinus	    |    419        |
+| Tricholoma scalpturatum   |    414        |
+| Xerocomellus chrysenteron |    406        |
+| Mycena galericulata	    |    375        |
+| Byssomerulius corium	    |    374        |
+| Cylindrobasidium laeve    |    364        |
+| Armillaria lutea	    |    352        |
+| Ganoderma pfeifferi	    |    342        |
+| Coprinellus micaceus	    |    340        |
+| Fomitopsis pinicola	    |    329        |
+| Trametes versicolor	    |    313        |
+| Fomes fomentarius	    |    308        |
+| Psathyrella candolleana   |    298        |
+| Xylodon paradoxus	    |    291        |
+| ...                       |    ...        |
+| Hydnum_albidum            |      6        |
+| Clitocybe_alexandri       |      6        |
+| Russula_carpini           |      6        |
+| Claviceps_purpurea        |      6        |
+| Physalacria_cryptomeriae  |      6        |
+| Ramaria_formosa           |      6        |
+
+Here is the output of the pandas.describe() method applied to the number of photos:
+| ------------------------- | ------------- |
+count	                    | 1394.000000   |
+mean	                    | 64.390244     |
+std	                    | 60.252196     |
+min	                    | 6.000000      |
+25%	                    | 22.000000     |
+50%	                    | 46.000000     |
+75%	                    | 88.000000     |
+max	                    | 442.000000    |
+
+This data set has 275 species with 100 pictures, but the majority of the species in this data set
+have less than this amount, with the median number of pictures being 46. However, not all of these
+species are of interest anyway, so this is still a very useful dataset.
+
+Note: using these pictures means you forfeit commercial rights.
 
 ### Saurabh Shahane - Mushroom Object Detection Dataset
 https://www.kaggle.com/saurabhshahane/mushroom-object-detection-dataset
@@ -157,7 +205,6 @@ folder, and 6 in the validation folder. It seems there were a small
 number of original images here which have been proliferated already. Or multiplied or whatever
 the word is.
 
-## From searching kaggle for "mushrooms"
 
 ### Ilya Kondrusevich - Mushrooms
 https://www.kaggle.com/ilyakondrusevich/mushrooms
@@ -172,6 +219,11 @@ This can be analysed later to see the mushrooms per species etc.
 It has folders broken into "Detection" and "Classification", so this could be
 interesting.
 
+## Mushrooms with genus labels
+Knowing the genus can still be useful, but a more likely use for these data sets is to just
+use them to extract the specifi species from them. You can see that within the specific genus
+folders the mushrooms are still ordered by species. So perhaps species names can be restored 
+to them.
 
 ### MUST_AI - Mushroom Classification Dataset
 https://www.kaggle.com/mustai/mushroom-12-9528
@@ -226,29 +278,38 @@ in northerm europe.
 | Russula       |  1148         | 751           |
 | Suillius      |  311          | 462           |
 
+## Pictures labelled by poison/edible
+It seems alot of people go down the path of just trying to detect whether a mushroom is
+poisonous or edible by it's appearance. To me this seems to be an intrinsicly ill-defined problem,
+because poisonous mushrooms do not look at certain way, and neither do edible ones. There are poisonous
+mushrooms which look more similar to all edible mushrooms than to other poisonous ones, and vice versa.
 
-## Good options for datasets with species names:
+In this project we have however trained a poisonous detection model; testing it on the kaggle competition
+death caps, we see that it incorrectly classifies 56% of them as edible.
 
-### Use kaggle api to get data which was for this challenge
-https://www.kaggle.com/c/fungi-challenge-fgvc-2018/data
+### Stepan Dupilak - predict poison mushrooom by photo
+https://www.kaggle.com/stepandupliak/predict-poison-mushroom-by-photo
 
-It's here:
-https://github.com/visipedia/fgvcx_fungi_comp#data
+A large (2GB) collection of photos of mushrooms in two folders classified as either poisonous or edible.
+There are no other labels on the photos so we would have to take this guys word for it.
 
-It is 13 GB of training and validation. But I think all labelled with species.
-So this is the data we need. Maybe some species are underrepresented, and it's ok
-if we can't identify them all.
+6937 edible mushroom photos.
+4766 poisonous mushroom photos.
 
-See description here:
-https://towardsdatascience.com/computer-vision-lets-classify-mushrooms-6b3abe1561eb
+
+## Options to obtain more data
 
 ### Use the webscraping described by the finnish people.
 
 https://tuomonieminen.github.io/deep-shrooms/
 
-### give up commercial rights and use image net.
+### Use image net.
 
 http://fungai.org/2017/12/12/download-imagenet-images-by-wnid/
 http://fungai.org/2017/12/13/train-a-basic-wild-mushroom-classifier/
 
-No!
+It seems, however, that ImageNet has changed considerably since the time that these articles
+were written, and it is now less straightforward to get pictures from there. Though we have 
+certainly not exhausted all means by which this may be possible.
+
+Note: if you use imagenet images you cannot do commercial things with the pictures.
