@@ -1,5 +1,7 @@
 # Mushroom Learning
 
+The mushroom learning app is hosted on heroku at https://mushroom-magicz.herokuapp.com/
+
 Mushroom learning is a repository containing a project aimed at the 
 specification of mushrooms. It contains two types of convolutional neural 
 network models: the first is one trained on a data set of various mushrooms
