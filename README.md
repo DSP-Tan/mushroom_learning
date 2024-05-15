@@ -83,14 +83,6 @@ cd mushroom_learning
 pip install -r requirements.txt
 make clean install test                # install and test
 ```
-Functionnal test with a script:
-
-```bash
-cd
-mkdir tmp
-cd tmp
-mushroom_learning-run
-```
 
 # Data set descriptions
 These data sets were largely obtained by searching kaggle for the different keywords "mushroom", "mushrooms", "fungus" and "fungi".
